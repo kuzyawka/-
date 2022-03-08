@@ -1,0 +1,21 @@
+1.
+
+
+#include <iostream>
+
+using namespace std;
+int main() {
+	setlocale(LC_CTYPE, "Russian");
+	for (int i = 0; i < 20; i++) {
+		for (int c = 0; c < i+1; c++) {
+			cout << "x";
+		}
+		cout << endl;
+	}
+	return 0;
+}
+
+
+2.
+
+
