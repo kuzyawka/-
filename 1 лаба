@@ -159,3 +159,32 @@ int main() {
 	cout << setiosflags(ios::left) << setw(10) << "Сидоров" << setw(10) << "Иван" << setw(15) << "Березовая,21" << setw(10) << "Калининград" << endl;
 	return 0;
 }
+
+
+12.
+
+
+
+#include <iostream>
+#include<iomanip>
+#include <io.h>
+#include <fcntl.h>
+using namespace std;
+int main() {
+	setlocale(LC_CTYPE, "Russian");
+	cout << "10 задание" << endl;
+	int ce, sh, g, p2, p; float c;
+	wchar_t F = L'\u00A3';
+
+	cout << "Введите число десятичных фунтов: ";
+	cin >> c;
+	ce = (c * 100 * 2.4)/240;
+	p = c * 100 * 2.4 - ce * 240;
+	sh = p / 12;
+	p2 = p - sh * 12;
+	
+	cout << ce << "." <<sh<<"."<<p2;
+	_setmode(_fileno(stdout), _O_U16TEXT);
+	wcout << F << endl;
+	return 0;
+}
