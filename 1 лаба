@@ -108,9 +108,38 @@ int main() {
 
 
 
-10.
+10.?????????????????????????????????????????????????????????????
 
 
+#include <iostream>
+#include<iomanip>
+#include <io.h>
+#include <fcntl.h>
+using namespace std;
+int main() {
+	setlocale(LC_CTYPE, "Russian");
+	cout << "10 задание" << endl;
+	int c, sh, g, p2,p;
+	wchar_t F = L'\u00A3';
+
+	cout << "Введите количество фунтов: ";
+	cin >> c;
+	cout << "Введите количество шиллингов: ";
+	cin >>sh;
+	cout << "Введите количество пенсов: ";
+	cin >>p;
+	p += sh * 12;
+	p2 = (float)p / 2.4;
+	if (p2 > 100) {
+		c = p2 / 100;
+		p2 = p2 / 100 * 100;
+	}
+	
+	cout << c << "." << p2;
+	_setmode(_fileno(stdout), _O_U16TEXT);
+	wcout << F << endl;
+	return 0;
+}
 
 
 
