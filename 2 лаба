@@ -145,4 +145,31 @@ int main()
 
 
 
+#include <iostream> 
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	double v, s, p, sum,a, let=0;
+	cout << "Введите начальный вклад: ";
+	cin >> v;
+	cout << "Введите желаемую сумму: ";
+	cin >> s;
+	cout << "Введите процентную ставку: ";
+	cin >> p;
+	sum = v;
+	do {
+		a = sum / 100 * p;
+		sum = sum + a;
+		let++;
+	} 
+	while (sum <= s);
+	cout << "через " <<let<<" лет вы получите "<<sum<<" долларов" << endl;
+	return 0;
+}
+
+
+11.
+
+
 
