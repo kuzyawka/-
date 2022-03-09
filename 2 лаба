@@ -173,3 +173,32 @@ int main()
 
 
 
+#include <iostream> 
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int a, b, c, d, e, f; char dr, z;
+	do {
+		cout << "Введите первую дробь: ";
+		cin >> a >> dr >> b;
+		cout << "Введите знак ";
+		cin >> z;
+		cout << "Введите вторую дробь: ";
+		cin >> c >> dr >> d;
+		switch (z) {
+		case '+': e = a * d + b * c;
+			f = b * d; break;
+		case '-': e = a * d - b * c;
+			f = b * d; break;
+		case '*': e = a * c;
+			f = b * d; break;
+		case '/': e = a * d;
+			f = b * c; break;
+		}
+		cout << e << dr << f << endl;
+		cout << "Продолжить?  введите y/n y- да,n-нет" << endl;
+		cin >> dr;
+	} while (dr == 'y');
+	return 0;
+}
