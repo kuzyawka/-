@@ -48,3 +48,31 @@ cout << "Введите число или 0,чтобы закончить: ";
 
 
 
+
+#include <iostream> 
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	float vklad, procent;
+	int years;
+	cout << "Начальный вклад: "; 
+	cin >> vklad;
+	cout << "Сколько лет: ";
+	cin >> years;
+	cout << "Процентаная ставка: "; 
+	cin >> procent;
+	procent = procent / 100;
+	
+	for (int i = 0; i < years; i++) {
+	vklad = vklad + vklad * procent; 
+}
+	cout << "В конце следующего года вы получите $ = " << vklad;
+	return 0;
+}
+
+
+8.
+
+
+
