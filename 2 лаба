@@ -76,3 +76,45 @@ int main()
 
 
 
+#include <iostream> 
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int f, sh, p, f2, sh2, p2; char t, otv;
+
+	do {
+		cout << "введите первую сумму в старых фунтов(3.4.5 пример): ";
+		cin >> f >> t >> sh >> t >> p;
+		while (sh >= 20 || p >= 12) {
+			cout << "ошибка. шиллинги не больше 20. пенсы не больше 12. повторите попытку: ";
+			cin >> f >> t >> sh >> t >> p;
+		}
+		cout << "введите вторую сумму в старых фунтов(3.4.5 пример): ";
+		cin >> f2 >> t >> sh2 >> t >> p2;
+		while (sh2 >= 20 || p2 >= 12) {
+			cout << "ошибка. шиллинги не больше 20. пенсы не больше 12. повторите попытку: ";
+			cin >> f2 >> t >> sh2 >> t >> p2;
+		}
+		f = f + f2;
+		if (p + p2 >= 12) {
+			sh++;
+			p = p + p2 - 12;
+		}
+		else p += p2;
+		if (sh + sh2 >= 20) {
+			f++;
+			sh = sh + sh2 - 20;
+		}
+		else sh += sh2;
+		cout << "Сумма равна= " << f << t << sh << t << p << "\nПродолжить? y/n (y-да, n-нет)";
+		cin >> otv;
+	} while (otv == 'y');
+	return 0;
+}
+
+
+
+9.
+
+
