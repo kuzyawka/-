@@ -170,7 +170,117 @@ int main()
 
 
 11.
+#include <iostream>
+#include <locale>
+using namespace std;
 
+int main() {
+    setlocale(LC_ALL, "RUS");
+
+   
+    char t,z;
+    int f, f2 , sh, sh2, p, p2 , mnoz; 
+    int sum = 0, sum1 = 0, sum2 = 0, sum3 = 0;
+    int min, min1, min2, min3;
+    int mul = 1, mul1 = 1, mul2 = 1, mul3 = 1;
+
+    cout << "введите первую сумму в старых фунтов(3.4.5 пример): ";
+    cin >> f >> t >> sh >> t >> p;
+    while (sh >= 20 || p >= 12) {
+        cout << "ошибка. шиллинги не больше 20. пенсы не больше 12. повторите попытку: ";
+        cin >> f >> t >> sh >> t >> p;
+    }
+    cout << "\nВведите знак(+-*): ";
+    cin >> z;
+
+    if (z == '*')
+    {
+        cout << "\nВведите второй множитель: ";
+        cin >> mnoz;
+    }
+    
+        cout << "\nвведите вторую сумму в старых фунтов(3.4.5 пример): ";
+        cin >> f2 >> t >> sh2 >> t >> p2;
+        while (sh2 >= 20 || p2 >= 12) {
+            cout << "ошибка. шиллинги не больше 20. пенсы не больше 12. повторите попытку: ";
+            cin >> f2 >> t >> sh2 >> t >> p2;
+        }
+    
+ 
+    if (f > 0)
+    {
+        sh += f * 20;
+        f = 0;
+    }
+    if (sh > 0)
+    {
+        p += sh * 12;
+        sh = 0;
+    }
+
+    
+    if (f2 > 0)
+    {
+        sh2 += f2 * 20;
+        f2 = 0;
+    }
+    if (sh2 > 0)
+    {
+        p2 += sh2 * 12;
+        sh2 = 0;
+    }
+
+    switch (z) {
+    case '+':
+        sum = p + p2;
+
+        sum3 = sum % 12;
+        sum /= 12;
+        sum2 = sum % 20;
+        sum /= 20;
+        sum1 = sum;
+        cout  << sum1 << t << sum2 << t << sum3;
+        break;
+    case '-':
+        min = p - p2;
+
+        min3 = min % 12;
+        min /= 12;
+        min2 = min % 20;
+        min /= 20;
+        min1 = min;
+        cout << min1 << t << min2 << t << min3;
+        break;
+    case '*':
+        sum = p + p2;
+
+        sum3 = sum % 12;
+        sum /= 12;
+        sum2 = sum % 20;
+        sum /= 20;
+        sum1 = sum;
+
+        mul3 = sum3 * mnoz;
+        mul2 = sum2 * mnoz;
+        mul1 = sum1 * mnoz;
+        if (mul3 > 12) {
+            mul2++;
+            mul3 -= 12;
+        }
+        if (mul2 > 20) {
+            mul1++;
+            mul2 -= 20;
+        }
+
+        cout << mul1 << t << mul2 << t << mul3;
+        break;
+    }
+
+    return 0;
+}
+
+
+12.
 
 
 #include <iostream> 
