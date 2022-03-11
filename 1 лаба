@@ -174,17 +174,18 @@ using namespace std;
 int main() {
 	setlocale(LC_CTYPE, "Russian");
 	cout << "10 задание" << endl;
-	int ce, sh, g, p2, p; float c;
+	int ce, sh, g, p2; double c, p;
 	wchar_t F = L'\u00A3';
 
 	cout << "Введите число десятичных фунтов: ";
 	cin >> c;
-	ce = (c * 100 * 2.4)/240;
-	p = c * 100 * 2.4 - ce * 240;
-	sh = p / 12;
-	p2 = p - sh * 12;
+	ce = static_cast<int>(c);
+	p = 240*(c-ce);
+	p2 = (static_cast<int>(p)) % 12;
+	sh = static_cast<int>((p-p2) / 12);
 	
-	cout << ce << "." <<sh<<"."<<p2;
+
+	cout << ce << "." << sh << "." << p2;
 	_setmode(_fileno(stdout), _O_U16TEXT);
 	wcout << F << endl;
 	return 0;
