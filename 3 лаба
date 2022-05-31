@@ -1,0 +1,354 @@
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+using namespace std;
+void func_employee()
+{
+	cout << "=====================\n"
+		<< "=Задание N4: Рабочие=\n"
+		<< "=====================\n\n";
+	struct employee
+	{
+		int number_of_worker;
+		float salary;
+	};
+	employee emp[3];
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "Введите информацию о " << i + 1 << " сотруднике:\n"
+			<< " Его номер: ";
+		cin >> emp[i].number_of_worker;
+		cout << " Его зарплата в $: ";
+		cin >> emp[i].salary;
+		cout << endl;
+	}
+	cout << endl;
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "Информация о " << i + 1 << " сотруднике:\n"
+			<< " Его номер: " << emp[i].number_of_worker << endl
+			<< " Его зарплата в $: " << emp[i].salary << endl;
+		cout << endl;
+	}
+}
+void func_date()
+{
+	cout << "==================\n"
+		<< "=Задание N5: Дата=\n"
+		<< "==================\n\n";
+	struct date
+	{
+		unsigned int day, month, year;
+	};
+	char sb = '0';
+	date today;
+	cout << " Введите дату в формате: DD/MM/YYYY\n";
+	cin >> today.day >> sb >> today.month >> sb >> today.year;
+	cout << "Вы ввели: " << today.day << sb << today.month << sb <<
+		today.year << endl;
+}
+void func_etype()
+{
+	cout << "=======================\n"
+		<< "=Задание N6: Должность=\n"
+		<< "=======================\n\n";
+	enum etype
+	{
+		laborer,
+		secretary,
+		manager,
+		accountant,
+		executive,
+		researcher
+	};
+	char sb;
+	int number_of_etype = -1;
+	cout << "Введите первую букву должности (laborer, secretary, manager, accountant,executive, researcher): ";
+		cin >> sb;
+	switch (sb)
+	{
+	case 'l':
+		number_of_etype = laborer;
+		break;
+	case 's':
+		number_of_etype = secretary;
+		break;
+	case 'm':
+		number_of_etype = manager;
+		break;
+	case 'a':
+		number_of_etype = accountant;
+		break;
+	case 'e':
+		number_of_etype = executive;
+		break;
+	case 'r':
+		number_of_etype = researcher;
+		break;
+	default:
+		cout << "Такой должности нет :(\n";
+		break;
+	}
+	switch (number_of_etype)
+	{
+	case laborer:
+		cout << "Полное название должности: laborer\n";
+		break;
+	case secretary:
+		cout << "Полное название должности: secretary\n";
+		break;
+	case manager:
+		cout << "Полное название должности: manager\n";
+		break;
+	case accountant:
+		cout << "Полное название должности: accountant\n";
+		break;
+	case executive:
+		cout << "Полное название должности: executive\n";
+		break;
+	case researcher:
+		cout << "Полное название должности: researcher\n";
+		break;
+	default:
+		cout << "Невозможно вывести полностью должность!\n";
+		break;
+	}
+}
+void func_extended_employee()
+{
+	cout << "===================================\n"
+		<< "=Задание N7: Расширенный сотрудник=\n"
+		<< "===================================\n\n";
+	char sb = '0';
+	enum etype
+	{	
+		laborer,
+		secretary,
+		manager,
+		accountant,
+		executive,
+		researcher
+	};
+	struct date
+	{
+		unsigned int day, month, year;
+	};
+	struct employee
+	{
+		int number_of_worker;
+		float salary;
+		char for_etype = '0';
+		date dt;
+	};
+	employee emp[3];
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "Введите информацию о " << i + 1 << " сотруднике:\n"
+			<< " Его номер: ";
+		cin >> emp[i].number_of_worker;
+		cout << " Его зарплата в $: ";
+		cin >> emp[i].salary;
+		cout << " Первя буква его должности\n"
+			<< " (laborer, secretary, manager, accountant, executive,researcher): ";
+			cin >> emp[i].for_etype;
+		cout << " Дата принятия на работу: ";
+		cin >> emp[i].dt.day >> sb >> emp[i].dt.month >> sb >> emp[i].dt.year;
+		cout << endl;
+	}
+	cout << endl;
+	for (int i = 0; i < 3; i++)
+	{
+		cout << "Информация о " << i + 1 << " сотруднике:\n"
+			<< " Его номер: " << emp[i].number_of_worker << endl
+			<< " Его зарплата в $: " << emp[i].salary << endl
+			<< " Его должность: ";
+		switch (emp[i].for_etype)
+		{
+		case 'l':
+			cout << "laborer\n";
+			break;
+		case 's':
+			cout << "secretary\n";
+				break;
+		case 'm':
+			cout << "manager\n";
+			break;
+		case 'a':
+			cout << "accountant\n";
+			break;
+		case 'e':
+			cout << "executive\n";
+			break;
+		case 'r':
+			cout << "researcher\n";
+			break;
+		default:
+			cout << "Такой должности нет :(\n";
+			break;
+		}
+		cout << " Дата принятия на работу: " << emp[i].dt.day << sb <<
+			emp[i].dt.month
+			<< sb << emp[i].dt.year << endl;
+	}
+}
+void sum_of_fractions()
+{
+	cout << "==========================\n"
+		<< "=Задание N8: Сумма дробей=\n"
+		<< "==========================\n";
+	struct fraction
+	{
+		int num, den;
+	};
+	fraction f_1, f_2;
+	char del = '0';
+	cout << " Введите 2 дроби, а мы их сложим и выведем вам результат\n";
+	cout << "Введите первую дробь: ";
+	cin >> f_1.num >> del >> f_1.den;
+	cout << "Введите вторую дробь: ";
+	cin >> f_2.num >> del >> f_2.den;
+	cout << "Сумма = " << f_1.num * f_2.den + f_2.num * f_1.den
+		<< del << f_1.den * f_2.den << endl;
+}
+void func_time()
+{
+	cout << "===================\n"
+		<< "=Задание N9: Время=\n"
+		<< "===================\n";
+	struct time
+	{
+		unsigned int seconds, minutes, hours;
+		
+	};
+	char sb = '0';
+	time tm;
+	cout << " Введите время в формате: HH:MM:SS\n";
+	cin >> tm.hours >> sb >> tm.minutes >> sb >> tm.seconds;
+	cout << " Количество секунд в введенном времени = "
+		<< tm.hours * 3600 + tm.minutes * 60 + tm.seconds << endl;
+}
+void reverseGreatBritain()
+{
+	cout << "==========================================\n"
+		<< "=Задание N10: Перевод в денежных системах=\n"
+		<< "==========================================\n";
+	struct sterling
+	{
+		int lb, shilling, penalties;
+	};
+	double elementary = 0.0;
+	int temp = 0;
+	sterling money;
+	cout << "Введите число десятичных фунтов: ";
+	cin >> elementary;
+	temp = elementary * 240.0;
+	money.lb = temp / 240.0;
+	temp -= money.lb * 240;
+	money.shilling = temp / 12.0;
+	temp -= money.shilling * 12;
+	money.penalties = temp;
+	cout << "Эквивалентная сумма в старой форме записи: £" << money.lb << '.' <<
+		money.shilling
+		<< '.' << money.penalties << endl;
+}
+void func_extended_time()
+{
+	cout << "==================================\n"
+		<< "=Задание N11: Складывание времени=\n"
+		<< "==================================\n";
+	struct time
+	{
+		unsigned int seconds, minutes, hours;
+	};
+	char sb = '0';
+	unsigned long timetotal = 0, temp = 0;
+	time tm_1, tm_2, tm_finish;
+	cout << " Введите время в формате: HH:MM:SS\nПервое значение времени: ";
+	cin >> tm_1.hours >> sb >> tm_1.minutes >> sb >> tm_1.seconds;
+	cout << "Второе значение времени: ";
+	cin >> tm_2.hours >> sb >> tm_2.minutes >> sb >> tm_2.seconds;
+	cout << " \"Сумма\" двух данных времен = ";
+	timetotal = (tm_1.hours + tm_2.hours) * 3600 + (tm_1.minutes + tm_2.minutes) * 60
+		+ (tm_1.seconds + tm_2.seconds);
+	temp = timetotal / 3600;
+	tm_finish.hours = temp;
+	timetotal -= tm_finish.hours * 3600;
+	temp = timetotal / 60;
+	tm_finish.minutes = temp;
+	timetotal -= tm_finish.minutes * 60;
+	tm_finish.seconds = timetotal;
+	cout << tm_finish.hours << sb << tm_finish.minutes << sb << tm_finish.seconds <<
+		endl;
+}
+void simple_culc()
+{
+	cout << "=============================================\n"
+		<< "=Задание №12: Простой калькулятор. Версия 2=\n"
+		<< "=============================================\n\n";
+	struct fraction
+	{
+		int num, den;
+	};
+	fraction f_1, f_2;
+	char del = '0', symbol = '0';
+	while (true)
+	{
+		cout << "Введите первую дробь, операцию ('+', '-', '*' или '/') и вторую дробь: ";
+			cin >> f_1.num >> del >> f_1.den >> symbol >> f_2.num >> del >> f_2.den;
+		switch (symbol)
+		{
+		case '+':
+			cout << "Сумма дробей = " << (f_1.num * f_2.den + f_1.den * f_2.num) <<
+				del
+				<< (f_1.den * f_2.den) << endl;
+			break;
+		case '-':
+			cout << "Разность дробей = " << (f_1.num * f_2.den - f_1.den * f_2.num)
+				<< del
+				<< (f_1.den * f_2.den) << endl;
+			break;
+		case '*':
+			cout << "Умножение дробей = " << (f_1.num * f_2.num) << del
+				<< (f_1.den * f_2.den) << endl;
+				break;
+		case '/':
+			cout << "Деление дробей = " << (f_1.num * f_2.den) << del
+				<< (f_1.den * f_2.num) << endl;
+			break;
+		default:
+			cout << "Такой операции нет в списке! :(\n";
+			break;
+		}
+		cout << "Продолжаем (y/n)? "; cin >> symbol;
+		if (symbol == 'n')
+		{
+			break;
+		}
+	}
+}
+int main(int nNumberofArgs, char* pszArgs[])
+{
+	setlocale(0, "");
+	func_employee();
+	cout << endl;
+	func_date();
+	cout << endl;
+	func_etype();
+	cout << endl;
+	func_extended_employee();
+	cout << endl;
+	sum_of_fractions();
+	cout << endl;
+	func_time();
+	cout << endl;
+	reverseGreatBritain();
+	cout << endl;
+	func_extended_time();
+	cout << endl;
+	simple_culc();
+	cout << "Нажмите Enter для продолжения...\n";
+	cin.get();
+	cin.get();
+	return 0;
+}
