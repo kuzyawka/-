@@ -1,0 +1,683 @@
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+// Находит наибольший элемент в массиве и возвращает его индекс.
+int maxint(int* arr, int size_for_arr)
+{
+	int largest_index = 0;
+	for (int i = 0; i < size_for_arr - 1; i++)
+	{
+		if (arr[i] < arr[i + 1])
+		{
+			largest_index = i + 1;
+		}
+	}
+	return largest_index;
+}
+class Fraction
+{
+private:
+	int num, den;
+public:
+	void set()
+	{
+		char sb = '0';
+		cout << "Введите дробь: "; cin >> num >> sb >> den;
+	}
+	int get_num()
+	{
+		return num;
+	}
+	int get_den()
+	{
+		return den;
+	}
+};
+enum Suit { clubs, diamonds, hearts, spades };
+// от 2 до 10 обычные числа
+const int jack = 11;
+const int queen = 12;
+const int king = 13;
+
+const int ace = 14;
+class Card
+{
+private:
+	int number;
+	Suit suit;
+public:
+	Card() // конструктор
+	{}
+	void set(int n, Suit s) // установка значения
+	{
+		suit = s;
+		number = n;
+	}
+	void display(); // показ карты
+};
+void Card::display()
+{
+	if (number >= 2 && number <= 10)
+	{
+		cout << number;
+	}
+	else
+	{
+		switch (number)
+		{
+		case jack: cout << 'J'; break;
+		case queen: cout << 'Q'; break;
+		case king: cout << 'K'; break;
+		case ace: cout << 'A'; break;
+
+		}
+	}
+	switch (suit)
+	{
+	case clubs: cout << (char)5; break;
+	case diamonds: cout << (char)4; break;
+	case hearts: cout << (char)3; break;
+	case spades: cout << (char)6; break;
+	}
+}
+class Money
+{
+private:
+	long long int temp;
+public:
+	long long int mstold(char* str)
+	{
+		temp = 0;
+		char str_temp[12];
+		str_temp[11] = '\0';
+		for (int i = 0, j = 0; i < 15; i++)
+		{
+			if (str[i] == '$' || str[i] == '\'' || str[i] == '.')
+			{
+				continue;
+			}
+			str_temp[j] = str[i];
+			j++;
+		
+		}
+		temp = atoll(str_temp);
+		return temp;
+	}
+	void ldtoms(double temp_sum)
+	{
+		char str_sum[19];
+		str_sum[18] = '\0';
+		unsigned long int integer = 0, integer_temp = 0;
+		for (int i = 0; i < 18; i++)
+		{
+			switch (i)
+			{
+			case 0:
+				integer_temp = temp_sum * 100;
+				integer = integer_temp % 10;
+				break;
+			case 1:
+				integer_temp = temp_sum * 10;
+				integer = integer_temp % 10;
+				break;
+			default:
+				integer_temp = temp_sum;
+				integer = integer_temp % 10;
+				temp_sum /= 10;
+				break;
+			}
+			str_sum[i] = integer + 48;
+	
+				if ((int)temp_sum == 0)
+				{
+					str_sum[i + 1] = '\0';
+					cout << '$';
+					char str_for_exit[30];
+					int k = 3;
+					str_for_exit[0] = str_sum[0];
+					str_for_exit[1] = str_sum[1];
+					str_for_exit[2] = '.';
+					int c = 0;
+					for (int j = 2; j <= i; j++)
+					{
+						if (j == i)
+						{
+							c++;
+							str_for_exit[k] = str_sum[j];
+						}
+						else
+						{
+							c++;
+							str_for_exit[k++] = str_sum[j];
+						}
+						if (c % 3 == 0)
+						{
+							str_for_exit[k++] = '\'';
+							c = 0;
+						}
+					}
+				
+						for (int h = k; h >= 0; h--)
+						{
+							cout << str_for_exit[h];
+						}
+					cout << endl;
+					break;
+				}
+		}
+	}
+};
+class Safearay
+{
+private:
+	int LIMIT[100];
+	bool check_ind(int ind)
+	{
+		if (ind >= 0 && ind < 100)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+public:
+	void put_el(int ind, int val)
+	{
+		if (check_ind(ind))
+		{
+	
+				LIMIT[ind] = val;
+		}
+		else
+		{
+			int ind_1 = 0;
+			cout << "Индекс неверный!\nИндекс [0; 99]\nВведите корректный индекс: "; cin >> ind_1;
+				put_el(ind_1, val);
+		}
+	}
+	int get_el(int ind)
+	{
+		if (check_ind(ind))
+		{
+			return LIMIT[ind];
+		}
+		else
+		{
+			int ind_1 = 0;
+			cout << "Индекс неверный!\nИндекс [0; 99]\nВведите корректный индекс: "; cin >> ind_1;
+				return get_el(ind_1);
+		}
+	}
+};
+class Queue
+{
+private:
+	enum { MAX = 10 };
+	int st[MAX];
+	
+		int tail, head;
+public:
+	Queue()
+	{
+		head = -1;
+		tail = 0;
+	}
+	void put(int var) // поместить в очередь
+	{
+		if (head == MAX - 1)
+		{
+			cout << "Очередь заполнена!\n";
+		}
+		else
+		{
+			st[++head] = var;
+			tail++;
+		}
+	}
+	void get() // извлечение из очереди
+	{
+		if (head == -1)
+		{
+			cout << "Очередь пуста!\n";
+		}
+		else
+		{
+			cout << st[0] << endl;
+			for (int i = 1; i < tail; i++)
+			{
+				st[i - 1] = st[i];
+			}
+			
+				head--;
+			tail--;
+		}
+	}
+};
+class Safematrix
+{
+private:
+	int LIMIT[10][10];
+	int real_i, real_j;
+	bool check_ind(int i_ind, int j_ind)
+	{
+		if ((i_ind >= 0 && i_ind <= real_i) && (j_ind >= 0 && j_ind <= real_j))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+public:
+	Safematrix()
+	{
+		cout << "Максимальное кол-во строк и столбцов матрицы по умолчанию: 10\n"
+			<< "Введите кол-во строк <= 10: "; cin >> real_i;
+		cout << "Введите кол-во столбцов <= 10: "; cin >> real_j;
+		cout << "Спасибо!\n";
+	}
+
+		void put_el(int i_ind, int j_ind, int val)
+	{
+		if (check_ind(i_ind, j_ind))
+		{
+			LIMIT[i_ind][j_ind] = val;
+		}
+		else
+		{
+			int i_ind_1 = 0, j_ind_1 = 0;
+			cout << "Индекс неверный!\nВведите корректный индекс строки: "; cin
+				>> i_ind_1;
+			cout << "Введите корректный индекс столбца: "; cin >> j_ind_1;
+			put_el(i_ind_1, j_ind_1, val);
+		}
+	}
+	int get_el(int i_ind, int j_ind)
+	{
+		if (check_ind(i_ind, j_ind))
+		{
+			return LIMIT[i_ind][j_ind];
+		}
+		else
+		{
+			int i_ind_1 = 0, j_ind_1 = 0;
+			cout << "Индекс неверный!\nВведите корректный индекс строки: "; cin
+				>> i_ind_1;
+			cout << "Введите корректный индекс столбца: "; cin >> j_ind_1;
+			return get_el(i_ind_1, j_ind_1);
+		}
+	}
+};
+
+class bMoney
+{
+private:
+	long double money;
+public:
+	void putmoney(char* str) // Положить деньги
+	{
+		char str_temp[] = "1234567890123456.78"; // На 19 элементов: 2 для дробной части, 16 для целой
+			// и 1 дляточки
+			// Копируем str в str_temp
+			int i_ind = 0, j_ind = 0;
+		while (str[i_ind])
+		{
+			if (str[i_ind] == '$' || str[i_ind] == '\'')
+			{
+				i_ind++;
+				continue;
+			}
+			else
+			{
+				str_temp[j_ind] = str[i_ind];
+				i_ind++;
+				j_ind++;
+			}
+		}
+		str_temp[j_ind] = str[i_ind]; // Не забываем про '\0'
+		// cout << "str_temp = " << str_temp << endl; // Для тестов
+		char left_str[] = "1234567890123456", right_str[] = "78";
+	
+			//Обнулим i_ind и j_ind
+			i_ind = 0;
+		j_ind = 0;
+		while (str_temp[i_ind])
+		{
+			if (str_temp[i_ind] == '.')
+			{
+				left_str[i_ind] = '\0';
+				right_str[0] = str_temp[i_ind + 1];
+				right_str[1] = str_temp[i_ind + 2];
+				break;
+			}
+			else
+			{
+				left_str[i_ind] = str_temp[i_ind];
+				i_ind++;
+			}
+		}
+		// cout << "left_str = " << left_str << endl; // Для тестов
+		// cout << "right_str = " << right_str << endl; // Для тестов
+		// Обнулим i_ind
+		i_ind = 0;
+		money = atoll(left_str) + atoll(right_str) / 100.0;
+		cout << "Вы ввели: " << fixed << setprecision(2) << money << endl;
+	}
+	void getmoney() // Вывести деньги
+	{
+		char str[] = "$9'999'999'999'999'990.00"; // На 25 элементов.
+
+			// 26 элемент = '\0'
+			unsigned long long int temp_money = money * 100; // Дробную часть в целую
+		int count = 0; // Будем использовать в качестве разделителя тысяч
+		// cout << temp_money << endl; // Для тестов
+		str[3] = '\0';
+		str[2] = temp_money % 10 + 48;
+		temp_money /= 10;
+		str[1] = temp_money % 10 + 48;
+		temp_money /= 10;
+		str[0] = '.';
+		for (int i = 4;; i++)
+		{
+			count++;
+			// Перемещаем прошлые элементы str в соответствии с новой итерацией
+			for (int j = i; j > 0; j--)
+			{
+				str[j] = str[j - 1];
+			}
+			if (count == 4) // Вставляем символ разделитель тысяч
+			{
+				str[0] = '\'';
+				count = 0;
+			
+					continue;
+			}
+			str[0] = temp_money % 10 + 48;
+			temp_money /= 10;
+			if (temp_money == 0)
+			{
+				cout << "$" << str << endl;
+				break;
+			}
+		}
+	}
+	void madd(bMoney* bM) // Складываем суммы
+	{
+		money += bM->money;
+	}
+};
+int main(int nNumberofArgs, char* pszArgs[])
+{
+	setlocale(0, "");
+	cout << "======================\n"
+		<< "=Задание N4: maxint()=\n"
+		<< "======================\n\n";
+	int size_for_arr = 0, largest_index = 0;
+	cout << "Кол-во целых чисел, которое вы хотите ввести: "; cin >> size_for_arr;
+	// Объявляем одномерный динамический массив
+	int* arr_for_4 = new int[size_for_arr];
+
+		cout << "Хорошо, вводите числа.\n";
+	for (int i = 0; i < size_for_arr; i++)
+	{
+		cout << " " << i + 1 << " число: "; cin >> arr_for_4[i];
+	}
+	cout << "\nВычислим наибольший элемент и его индекс.\n";
+	largest_index = maxint(arr_for_4, size_for_arr);
+	cout << "Наибольший элемент массива = " << arr_for_4[largest_index] << endl
+		<< "Его индекс = " << largest_index << endl;
+	// Высвобождаем память, отводимую под одномерный динамический массив
+	delete[] arr_for_4;
+	cout << endl;
+	cout << "=====================================\n"
+		<< "=Задание N5: Среднее значение дробей=\n"
+		<< "=====================================\n\n";
+	int size_for_fraction;
+	cout << "Кол-во дробей, которое вы хотите ввести: "; cin >> size_for_fraction;
+	Fraction* arr_for_fraction = new Fraction[size_for_fraction];
+	for (int i = 0; i < size_for_fraction; i++)
+	{
+		cout << " " << i + 1 << " дробь.\n";
+		arr_for_fraction[i].set();
+		cout << endl;
+
+	}
+	cout << "Дроби получены, теперь вычислим среднее значение.\n";
+	double num = 0.0, den = 0.0, sum_general = 0.0;
+	for (int i = 0; i < size_for_fraction; i++)
+	{
+		num = arr_for_fraction[i].get_num();
+		den = arr_for_fraction[i].get_den();
+		sum_general += num / den;
+	}
+	cout << "Среднее значение = " << sum_general / (double)size_for_fraction << endl;
+	cout << endl;
+	cout << "======================\n"
+		<< "=Задание N6: CARDARAY=\n"
+		<< "======================\n\n";
+	Card deck[52];
+	cout << endl;
+	for (int j = 0; j < 52; j++) // создаем упорядоченную колоду карт
+	{
+		int num = (j % 13) + 2;
+		Suit su = Suit(j / 13);
+		deck[j].set(num, su);
+	}
+	// показываем исходную колоду
+	cout << "Исходная колода:\n";
+
+		for (int j = 0; j < 52; j++)
+		{
+			deck[j].display();
+			cout << ' ';
+			if (!((j + 1) % 13)) // начинаем новую строку после каждой 13-й карты
+			{
+				cout << endl;
+			}
+		}
+	srand(time(NULL)); // инициализируем генератор случайных чисел
+	for (int j = 0; j < 52; j++)
+	{
+		int k = rand() % 52; // Выбираем случайную карту
+		Card temp = deck[j]; // и меняем ее с текущей
+		deck[j] = deck[k];
+		deck[k] = temp;
+	}
+	// показываем перемешанную колоду
+	cout << "\nПеремешанная колода:\n";
+	for (int j = 0; j < 52; j++)
+	{
+		deck[j].display();
+		cout << " ";
+		if (!((j + 1) % 13)) // начинаем новую строку после каждой 13-й карты
+		{
+			cout << endl;
+		}
+	}
+	cout << endl;
+	cout << "Теперь разделим колоду на 4 части по 13 карт в каждой.\n";
+
+		Card pack_0[13], pack_1[13], pack_2[13], pack_3[13];
+	for (int i = 0; i < 52; i++)
+	{
+		if (i <= 12)
+		{
+			pack_0[i % 13] = deck[i];
+		}
+		else
+		{
+			if (i <= 25)
+			{
+				pack_1[i % 13] = deck[i];
+			}
+			else
+			{
+				if (i <= 38)
+				{
+					pack_2[i % 13] = deck[i];
+				}
+				else
+				{
+					pack_3[i % 13] = deck[i];
+				}
+			}
+		}
+	}
+	for (int i = 0; i < 52; i++)
+	{
+		if (i <= 12)
+		{
+			if (i == 0)
+			{
+			
+					cout << "Группа карт №1:";
+			}
+			cout << ' ';
+			pack_0[i % 13].display();
+		}
+		else
+		{
+			if (i <= 25)
+			{
+				if (i == 13)
+				{
+					cout << "\nГруппа карт №2:";
+				}
+				cout << ' ';
+				pack_1[i % 13].display();
+			}
+			else
+			{
+				if (i <= 38)
+				{
+					if (i == 26)
+					{
+						cout << "\nГруппа карт №3:";
+					}
+					cout << ' ';
+					pack_2[i % 13].display();
+				}
+				else
+				{
+					if (i == 39)
+					{
+						
+							cout << "\nГруппа карт №4:";
+					}
+					cout << ' ';
+					pack_3[i % 13].display();
+				}
+			}
+		}
+	}
+	cout << "\n\n";
+	cout << "===================\n"
+		<< "=Задание N7: Money=\n"
+		<< "===================\n\n";
+	Money mn;
+	char str[] = "$123'480'706.29";
+	long long int temp = mn.mstold(str);
+	cout << '$' << temp / 100 << ',' << temp % 100 << endl;
+	cout << endl;
+	cout << "=============================\n"
+		<< "=Задание N8: Границы массива=\n"
+		<< "=============================\n\n";
+	Safearay sfarr;
+	int val_for_8 = 0, ind_for_8 = 0;
+	
+		cout << "Индекс [0; 99]. Введите индекс массива: "; cin >> ind_for_8;
+	cout << "Введите значение, которое будет размещено по этому инндексу: "; cin >>
+		val_for_8;
+	sfarr.put_el(ind_for_8, val_for_8);
+	cout << "Введите индекс, по которому нужно получить значение: "; cin >> ind_for_8;
+	cout << "Значение по этому индексу = " << sfarr.get_el(ind_for_8) << endl;
+	cout << endl;
+	cout << "=====================\n"
+		<< "=Задание N9: Очередь=\n"
+		<< "=====================\n\n";
+	Queue q;
+	for (int i = 0; i < 11; i++)
+	{
+		q.put(i + 1);
+	}
+	cout << endl;
+	for (int i = 0; i < 4; i++)
+	{
+		q.get();
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		q.put(100 + i * 10);
+	}
+	
+	
+		cout << endl;
+	for (int i = 0; i < 11; i++)
+	{
+		q.get();
+	}
+	cout << endl;
+	cout << "======================\n"
+		<< "=Задание N10: Матрица=\n"
+		<< "======================\n\n";
+	Safematrix sfmat;
+	int val_for_10 = 0, i_ind_for_10 = 0, j_ind_for_10 = 0;
+	cout << "Введите индекс строки массива: "; cin >> i_ind_for_10;
+	cout << "Введите индекс столбца массива: "; cin >> j_ind_for_10;
+	cout << "Введите значение, которое будет размещено по этому инндексу: "; cin >>
+		val_for_10;
+	sfmat.put_el(i_ind_for_10, j_ind_for_10, val_for_10);
+	cout << "Введите индекс строки, по которому нужно получить значение: "; cin >>
+		i_ind_for_10;
+	cout << "Введите индекс столбца, по которому нужно получить значение: "; cin >>
+		j_ind_for_10;
+	cout << "Значение по этому индексу = " << sfmat.get_el(i_ind_for_10, j_ind_for_10) <<
+		endl;
+	cout << endl;
+	cout << "===========================\n"
+		
+		<< "=Задание N11: Опять деньги=\n"
+		<< "===========================\n\n";
+	double val_for_11 = 0.0;
+	cout << "Введите денежную сумму: $"; cin >> val_for_11;
+	Money mn_for_11;
+	mn_for_11.ldtoms(val_for_11);
+	cout << endl;
+	cout << "=====================\n"
+		<< "=Задание N12: bMoney=\n"
+		<< "=====================\n\n";
+	char str_for_12[] = "$9'999'999'999'999'990.00";
+		cout << "Введите первую сумму денег: "; cin >> str_for_12;
+	bMoney bM_0;
+	bM_0.putmoney(str_for_12);
+	cout << endl;
+	cout << "Ваша сумма: ";
+	bM_0.getmoney();
+	cout << endl;
+	
+	
+		cout << "Введите вторую сумму денег: "; cin >> str_for_12;
+	bMoney bM_1;
+	bM_1.putmoney(str_for_12);
+	cout << endl;
+	cout << "Ваша сумма: ";
+	bM_1.getmoney();
+	cout << endl;
+	cout << "Их сумма: ";
+	bM_0.madd(&bM_1);
+	bM_0.getmoney();
+	cout << endl;
+
+	cout << "Нажмите Enter для продолжения...\n";
+	cin.get();
+	cin.get();
+	return 0;
+}
