@@ -1,0 +1,299 @@
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+using namespace std;
+unsigned int for_disturb = 0;
+struct sterling
+{
+	int lb, shilling, penalties;
+};
+struct fraction
+{
+	int num, den;
+};
+struct my_time
+{
+	unsigned int hours, minutes, seconds;
+};
+long time_to_secs(my_time tm)
+{
+	return tm.hours * 3600 + tm.minutes * 60 + tm.seconds;
+}
+my_time secs_to_time(long totalseconds)
+{
+	my_time tm_result;
+	long temp = totalseconds / 3600;
+	tm_result.hours = temp;
+	totalseconds -= tm_result.hours * 3600;
+	temp = totalseconds / 60;
+	tm_result.minutes = temp;
+	totalseconds -= tm_result.minutes * 60;
+	tm_result.seconds = totalseconds;
+	return tm_result;
+}
+long hms_to_secs(int hours, int minutes, int secs)
+{
+	return hours * 3600 + minutes * 60 + secs;
+}
+void func_extended_time()
+{
+	cout << "==================================\n"
+		<< "=Задание N6: Складывание времени=\n"
+		<< "==================================\n";
+	char sb = '0';
+	unsigned long timetotal = 0, temp = 0;
+	my_time tm_1, tm_2, tm_finish;
+	cout << " Введите время в формате: HH:MM:SS\nПервое значение времени: ";
+	cin >> tm_1.hours >> sb >> tm_1.minutes >> sb >> tm_1.seconds;
+	cout << "Второе значение времени: ";
+	cin >> tm_2.hours >> sb >> tm_2.minutes >> sb >> tm_2.seconds;
+	cout << " Спасибо! \"Сумма\" двух данных времен в нормальном виде = ";
+	timetotal = (tm_1.hours + tm_2.hours) * 3600 + (tm_1.minutes + tm_2.minutes) * 60
+		+ (tm_1.seconds + tm_2.seconds);
+	tm_finish = secs_to_time(timetotal);
+	cout << tm_finish.hours << sb << tm_finish.minutes << sb << tm_finish.seconds << endl
+		<< "\"Сумма\" двух данных времен в секундах = " << time_to_secs(tm_finish) <<
+		endl;
+}
+double power(double n, int p = 2)
+{
+	cout << "Вызвалась функция с \"double\" и \"int\"!\n";
+	return pow(n, p);
+}
+double power(char n, int p = 2)
+{
+	cout << "Вызвалась функция с \"char\" и \"int\"!\n";
+	int h = n - 48;
+	return pow(h, p);
+}
+double power(int n, int p = 2)
+{
+	cout << "Вызвалась функция с \"int\" и \"int\"!\n";
+	return pow(n, p);
+}
+double power(long n, int p = 2)
+{
+	cout << "Вызвалась функция с \"long\" и \"int\"!\n";
+	return pow(n, p);
+}
+double power(float n, int p = 2)
+{
+	cout << "Вызвалась функция с \"float\" и \"int\"!\n";
+	return pow(n, p);
+}
+void swap(int* p1, int* p2)
+{
+	int temp = *p1;
+	*p1 = *p2;
+	*p2 = temp;
+}
+void swap(my_time* p1, my_time* p2)
+{
+	my_time temp;
+	temp.hours = (*p1).hours;
+	temp.minutes = (*p1).minutes;
+	temp.seconds = (*p1).seconds;
+	*p1 = *p2;
+	*p2 = temp;
+}
+void disturb_glob()
+{
+	cout << "Кол-во вызовов функции с глобальной переменной: " << ++for_disturb << endl;
+}
+void disturb_stat()
+{
+	static int for_dist = 0;
+	cout << "Кол-во вызовов функции со статической переменной: " << ++for_dist << endl;
+}
+sterling ster_1(int i_lb, int i_shilling, int i_penalties)
+{
+	sterling temp;
+	temp.lb = i_lb;
+	temp.shilling = i_shilling;
+	temp.penalties = i_penalties;
+	return temp;
+}
+sterling ster_2(sterling s_1, sterling s_2)
+{
+	long general = 0;
+	sterling s_finish;
+	general = (s_1.penalties + s_2.penalties) + 12 * (s_1.shilling + s_2.shilling) + 240
+		* (s_1.lb + s_2.lb);
+	s_finish.lb = general / 240;
+	general -= s_finish.lb * 240;
+	s_finish.shilling = general / 12;
+	general -= s_finish.shilling * 12;
+	s_finish.penalties = general;
+	return s_finish;
+}
+void ster_3(sterling s)
+{
+	cout << "Сумма вышла: " << s.lb << '.' << s.shilling << '.' << s.penalties << endl;
+}
+fraction add(fraction f_1, fraction f_2)
+{
+	fraction temp;
+	temp.num = f_1.num * f_2.den + f_1.den * f_2.num;
+	temp.den = f_1.den * f_2.den;
+	return temp;
+}
+fraction sub(fraction f_1, fraction f_2)
+{
+	fraction temp;
+	temp.num = f_1.num * f_2.den - f_1.den * f_2.num;
+	temp.den = f_1.den * f_2.den;
+	return temp;
+}
+fraction mul(fraction f_1, fraction f_2)
+{
+	fraction temp;
+	temp.num = f_1.num * f_2.num;
+	temp.den = f_1.den * f_2.den;
+	return temp;
+}
+fraction div(fraction f_1, fraction f_2)
+{
+	fraction temp;
+	temp.num = f_1.num * f_2.den;
+	temp.den = f_1.den * f_2.num;
+	return temp;
+}
+void simple_culc()
+{
+	cout << "===================================\n"
+		<< "=Задание №12: Простой калькулятор=\n"
+		<< "===================================\n\n";
+	fraction f_1, f_2, f_s;
+	char del = '0', symbol = '0';
+	while (true)
+	{
+		cout << "Введите первую дробь, операцию ('+', '-', '*' или '/') и вторую дробь: ";
+			cin >> f_1.num >> del >> f_1.den >> symbol >> f_2.num >> del >> f_2.den;
+		switch (symbol)
+		{
+		case '+':
+			f_s = add(f_1, f_2);
+			cout << "Сумма дробей = " << f_s.num << del << f_s.den << endl;
+			break;
+		case '-':
+			f_s = sub(f_1, f_2);
+			cout << "Разность дробей = " << f_s.num << del << f_s.den << endl;
+			break;
+		case '*':
+			f_s = mul(f_1, f_2);
+			cout << "Умножение дробей = " << f_s.num << del << f_s.den << endl;
+			break;
+		case '/':
+			f_s = div(f_1, f_2);
+			cout << "Деление дробей = " << f_s.num << del << f_s.den << endl;
+			break;
+		default:
+			cout << "Такой операции нет в списке! :(\n";
+			break;
+		}
+		cout << "Продолжаем (y/n)? "; cin >> symbol;
+		if (symbol == 'n')
+		{
+			break;
+		}
+	}
+}
+int main(int nNumberofArgs, char* pszArgs[])
+{
+	setlocale(0, "");
+	do
+	{
+		cout << "===================\n"
+			<< "=Задание N5: Время=\n"
+			<< "===================\n";
+		int hours = 0, minutes = 0, secs = 0;
+		char sb = '0';
+		cout << " Введите время в формате: HH:MM:SS\n";
+		cin >> hours >> sb >> minutes >> sb >> secs;
+		cout << "Количество секунд в введенном времени = "
+			<< hms_to_secs(hours, minutes, secs) << endl;
+		cout << "Продолжить? (y/n): ";
+		cin >> sb;
+		if (sb == 'n')
+		{
+			break;
+		}
+	} while (true);
+	cout << endl;
+	func_extended_time();
+	cout << endl;
+	cout << "========================\n"
+		<< "=Задание N7: Перегрузка=\n"
+		<< "========================\n";
+	cout << power((double)5.5, 3) << endl;
+	cout << power('5', 3) << endl;
+	cout << power((int)5, 3) << endl;
+	cout << power((long)5, 3) << endl;
+	cout << power((float)5.5, 3) << endl;
+	cout << endl;
+	cout << "===================\n"
+		<< "=Задание N8: Обмен=\n"
+		<< "===================\n";
+	int p1 = 1, p2 = 2;
+	cout << "p1 = " << p1 << "; p2 = " << p2 << endl;
+	swap(&p1, &p2);
+	cout << "p1 = " << p1 << "; p2 = " << p2 << endl;
+	cout << endl;
+	cout << "===========================\n"
+		<< "=Задание N9: Обмен времени=\n"
+		<< "===========================\n";
+	my_time tm_1, tm_2;
+	tm_1.hours = 11;
+	tm_1.minutes = 11;
+	tm_1.seconds = 11;
+	tm_2.hours = 22;
+	tm_2.minutes = 22;
+	tm_2.seconds = 22;
+	cout << "Время первое: " << tm_1.hours << ':' << tm_1.minutes << ':' << tm_1.seconds
+		<< endl
+		<< "Время второе: " << tm_2.hours << ':' << tm_2.minutes << ':' <<
+		tm_2.seconds << endl;
+	cout << "Произведем обмен. В итоге:\n";
+	swap(&tm_1, &tm_2);
+	cout << "Время первое: " << tm_1.hours << ':' << tm_1.minutes << ':' << tm_1.seconds
+		<< endl
+		<< "Время второе: " << tm_2.hours << ':' << tm_2.minutes << ':' <<
+		tm_2.seconds << endl;
+	cout << endl;
+	cout << "===============================\n"
+		<< "=Задание N10: Тревожим функцию=\n"
+		<< "===============================\n";
+	for (int i = 0; i < 15; i++)
+	{
+		disturb_glob();
+	}
+	cout << endl;
+	for (int i = 0; i < 15; i++)
+	{
+		disturb_stat();
+	}
+	cout << endl;
+	cout << "============================\n"
+		<< "=Задание N11: Складываем деньги=\n"
+		<< "================================\n";
+	char symbol = '0';
+	int i_lb_1 = 0, i_shilling_1 = 0, i_penalties_1 = 0,
+		i_lb_2 = 0, i_shilling_2 = 0, i_penalties_2 = 0;
+	sterling s_1, s_2, s_final;
+	cout << "Введите первую сумму: ";
+	cin >> i_lb_1 >> symbol >> i_shilling_1 >> symbol >> i_penalties_1;
+	s_1 = ster_1(i_lb_1, i_shilling_1, i_penalties_1);
+	cout << "Введите вторую сумму: ";
+	cin >> i_lb_2 >> symbol >> i_shilling_2 >> symbol >> i_penalties_2;
+	s_2 = ster_1(i_lb_2, i_shilling_2, i_penalties_2);
+	s_final = ster_2(s_1, s_2);
+	ster_3(s_final);
+	cout << endl;
+	simple_culc();
+	cout << endl;
+	cout << "Нажмите Enter для продолжения...\n";
+	cin.get();
+	cin.get();
+	return 0;
+}
