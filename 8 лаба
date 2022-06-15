@@ -225,4 +225,101 @@ int main()
 
 
 
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+const int LIMIT = 100; // размер массива
+
+// оригинальный класс, реализующий «безопасный» массив 
+class safearray
+{
+private:
+int arr[LIMIT]; 
+public:
+	int& operator[] (int n)
+	{
+		if (n < 0 || n >= LIMIT)
+		{
+			cout << "Ошибочный индекс!"; exit(1);
+		}
+		return arr[n];
+	}
+};
+
+// новый класс, производный от оригинального класса safearray, реализующий
+
+// возможность определения границ массива 
+class safehilo : public safearray
+{
+private:
+	int lowerbound; // нижняя граница индекса массива 
+	int upperbound; // верхняя граница индекса массива
+public:
+	// конструктор с двумя аргументами
+	safehilo(int low, int up) : lowerbound(low), upperbound(up)
+	{
+		// проверим заданные пользователем границы на ошибки
+		if (lowerbound > upperbound)
+		{
+			cout << "Ошибка! Верхняя граница индекса массива не может быть меньше нижней.\n"; exit(1);
+		}
+		if (upperbound - lowerbound >= LIMIT)
+		{
+			cout << "Ошибка! В массиве не может быть больше " << LIMIT << L" элементов.\n"; exit(1);
+		}
+	}
+
+	int& operator[] (int n)
+	{
+		if (n < lowerbound || n > upperbound)
+		{
+			cout << "Ошибочный индекс!"; exit(1);
+		}
+
+		return safearray::operator[] (n - lowerbound);
+		// выражение (n - lowerbound) отображает заданный пользователем индекс в реальный
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int low, up; // для верхней и нижней границ индекса массива
+
+	cout << "Введите нижнюю границу индекса массива : "; cin >> low; 
+	cout << "Введите верхнюю границу индекса массива: "; cin >> up;
+
+	safehilo sa1(low, up);
+
+	// задаем значения элементов
+	 for (int j = low; j <= up; j++)
+	// используем функцию слева от знака присваивания (=) 
+		 sa1[j] = j * 10;
+
+	// показываем элементы
+
+	for (int j = low; j <= up; j++)
+	{
+		// используем функцию справа от знака присваивания (=)
+		int temp = sa1[j];
+		cout << "Элемент " << j << " равен " << temp << endl;
+	}
+
+	return 0;
+}
+
+
+
+
+
+7
+
+
+
 
