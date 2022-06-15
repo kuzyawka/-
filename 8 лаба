@@ -1,3 +1,6 @@
+4
+
+
 #include <iostream>
 #include <iomanip>
 #include <ctype.h>
@@ -27,7 +30,7 @@ public:
 	{
 		for (int j = 1; j <= SAL; j++)
 		{
-			cout << "\nВыручка от продаж в " << j << " месяце: "; 
+			cout << "\nВыручка от продаж в " << j << " месяце: ";
 			cout << sales[j];
 		}
 	}
@@ -43,6 +46,7 @@ public:
 	{
 		cout << "Введите название книги: "; cin >> name; cout << "\nЦена: "; cin >> price;
 	}
+
 	void putdata()const
 	{
 		cout << "\nназвание книги: " << name << "\nцена: " << price;
@@ -78,13 +82,13 @@ public:
 	void getdata()
 	{
 		Publication::getdata();
-		cout << "\nвведите время проигрывания аудиокниги в минутах: "; cin >> time; 
+		cout << "\nвведите время проигрывания аудиокниги в минутах: "; cin >> time;
 		Sales::getdata();
 	}
 	void putdata()const
 	{
 		Publication::putdata();
-		cout << "\nвремя проигрывания аудиокниги в минутах: " << time; 
+		cout << "\nвремя проигрывания аудиокниги в минутах: " << time;
 		Sales::putdata();
 	}
 };
@@ -97,11 +101,11 @@ private:
 public:
 	void getdata()
 	{
-		etype t_disk; 
+		etype t_disk;
 		char type;
 		Publication::getdata();
 		cout << "\nТип диска (c/d): "; cin >> type;
-		if (type == 'c')
+		if (type = 'c')
 			t_disk = CD;
 		else t_disk = DVD;
 
@@ -109,11 +113,11 @@ public:
 	}
 	void putdata()const
 	{
-		Publication::putdata(); 
+		Publication::putdata();
 		etype t_disk;
 		char type;
 		cout << "\nТип диска: ";
-		if (t_disk == CD)
+		if (t_disk = CD)
 			cout << "CD";
 		else
 			cout << "DVD";
@@ -139,3 +143,13 @@ int main()
 	cout << "\n" << "класс Диск: "; dk.putdata();
 	cout << endl; system("pause");
 };
+
+
+
+
+5
+
+
+
+
+
