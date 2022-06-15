@@ -1,0 +1,141 @@
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+const int SAL = 3; //кол-во месяцев
+
+class Sales // класс, представляющий сведения о выручке от продаж за 3 месяца
+{
+private:
+	float sales[SAL]; // массив из *SAL* чисел, каждое из которых представляет
+	// собой выручку от продаж за один месяц
+public:
+	void getdata()
+	{
+		for (int j = 1; j <= SAL; j++)
+		{
+			cout << "\nВведите выручку от продаж в " << j << " месяце: ";
+			cin >> sales[j];
+		}
+	}
+	void putdata()const
+	{
+		for (int j = 1; j <= SAL; j++)
+		{
+			cout << "\nВыручка от продаж в " << j << " месяце: "; 
+			cout << sales[j];
+		}
+	}
+};
+
+class Publication // класс, представляющий издание (результат работы издательской компании)
+{
+private:
+	string name; //название издания 
+	float price; //цена экземпляра
+public:
+	void getdata() //Ввод информации
+	{
+		cout << "Введите название книги: "; cin >> name; cout << "\nЦена: "; cin >> price;
+	}
+	void putdata()const
+	{
+		cout << "\nназвание книги: " << name << "\nцена: " << price;
+	}
+};
+
+class Book : private Sales, private Publication // класс, представляющий бумажную книгу
+// (производный от класса, представляющего издание, и от класса со сведениями о выручке от продаж)
+{
+private:
+	int pages; // количество страниц в книге 
+public:
+	void getdata()
+	{
+		Publication::getdata();
+		cout << "\nвведите кол-во страниц в книге: "; cin >> pages;
+		Sales::getdata();
+	}
+	void putdata()const
+	{
+		Publication::putdata();
+		cout << "\nкол-во страниц в книге: " << pages;
+		Sales::putdata();
+	}
+};
+// класс, представляющий аудиокнигу
+// (производный от класса, представляющего издание, и от класса со сведениями о выручке от продаж)
+class Type : private Sales, private Publication
+{
+private:
+	float time; // время проигрывания аудиокниги в минутах 
+public:
+	void getdata()
+	{
+		Publication::getdata();
+		cout << "\nвведите время проигрывания аудиокниги в минутах: "; cin >> time; 
+		Sales::getdata();
+	}
+	void putdata()const
+	{
+		Publication::putdata();
+		cout << "\nвремя проигрывания аудиокниги в минутах: " << time; 
+		Sales::putdata();
+	}
+};
+// класс, представляющий издание (книгу) на оптическом диске
+// (производный от класса, представляющего издание, и от класса со сведениями о выручке от продаж)
+class Disk : private Sales, private Publication
+{
+private:
+	enum etype { CD, DVD }; // тип оптического диска: CD или DVD 
+public:
+	void getdata()
+	{
+		etype t_disk; 
+		char type;
+		Publication::getdata();
+		cout << "\nТип диска (c/d): "; cin >> type;
+		if (type == 'c')
+			t_disk = CD;
+		else t_disk = DVD;
+
+		Sales::getdata();
+	}
+	void putdata()const
+	{
+		Publication::putdata(); 
+		etype t_disk;
+		char type;
+		cout << "\nТип диска: ";
+		if (t_disk == CD)
+			cout << "CD";
+		else
+			cout << "DVD";
+		Sales::putdata();
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	// создадим объекты для тестирования соответствующих классов
+	Book bok; //книга
+	Type tp; //аудиокнига
+	Disk dk; //оптический диск
+	// получим от пользователя данные для тестируемых объектов 
+	bok.getdata();
+	tp.getdata();
+	dk.getdata();
+	// выведем на экран данные тестируемых объектов
+
+	cout << "\n" << "класс Книга:: "; bok.putdata();
+	cout << "\n" << "класс Аудиокнига: "; tp.putdata();
+	cout << "\n" << "класс Диск: "; dk.putdata();
+	cout << endl; system("pause");
+};
