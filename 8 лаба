@@ -151,5 +151,78 @@ int main()
 
 
 
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+class Employee //класс Работник
+{
+protected:
+	string name; unsigned int number;
+public: void set()
+{
+	
+	cout << "Введите имя: "; cin >> name; 
+	cout << "Введите номер: "; cin >> number;
+}
+	  void get()
+	  {
+		  cout << "Имя: " << name << endl; cout << "Номер: " << number << endl;
+	  }
+};
+class Employee_ver2 : public Employee
+{
+protected: //период оплаты работы
+	enum period { hourly, weekly, monthly }; period per;
+double compensation; public:
+	void set_ver2()
+	{
+		char sb = '0'; set();
+		cout << "Введите зарплату: "; cin >> compensation;
+		cout << "Введите период оплаты работы служащего (ch, n или m): "; cin >> sb; 
+		switch (sb)
+		{
+		case 'ch': per = hourly; break;
+		case 'n': per = weekly; break; 
+		case 'm': per = monthly; break;
+		default:
+			cout << "Нет такого периода! Вводите данные заново\n";
+
+			cin.get(); set_ver2(); break;
+		}
+	}
+	void get_ver2()
+	{
+		get();
+		cout << "Зарплата = " << compensation << endl; cout << "Период оплаты работы служащего: ";
+		switch (per)
+		{
+		case hourly: cout << "почасовая\n"; break; 
+		case weekly: cout << "понедельная\n"; break;
+		case monthly: cout << "помесячная\n"; break;
+		}
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian"); Employee_ver2 emp; emp.set_ver2(); emp.get_ver2();
+	cout << endl;
+
+}
+
+
+
+
+6
+
+
+
+
 
 
