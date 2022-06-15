@@ -620,3 +620,88 @@ int main(int nNumberofArgs, char* pszArgs[])
 НОМЕР 9
 
 
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+// #include <process.h> // для функции exit не понадобился 
+const int LIMIT = 100; // размер массива
+class safearray // класс, реализующий «безопасный» массив
+{
+private:
+	int arr[LIMIT]; // наш массив
+	int lowerbound; // нижняя граница индекса массива
+	int upperbound; // верхняя граница индекса массива
+
+public:
+
+
+	// конструктор с двумя аргументами
+	safearray(int low, int up) : lowerbound(low), upperbound(up)
+	{
+
+		// проверим заданные пользователем границы на ошибки
+		if (lowerbound > upperbound)
+		{
+			cout << "Ошибка! Верхняя граница индекса массива не может быть меньше нижней.\n"; exit(1);
+		}
+		if (upperbound - lowerbound >= LIMIT)
+		{
+			cout << "Ошибка! В массиве не может быть больше " << LIMIT << " элементов.\n"; exit(1);
+		}
+	}
+
+	int& operator[] (int n)
+	{
+		if (n < lowerbound || n > upperbound)
+		{
+			cout << "Ошибочный индекс!"; exit(1);
+		}
+
+
+
+	
+
+			return arr[n - lowerbound];
+		// выражение (n - lowerbound) отображает заданный пользователем индекс в реальный
+
+	}
+	
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int low, up; // для верхней и нижней границ индекса массива 
+	cout << "Введите нижнюю границу индекса массива : ";
+	cin >> low;
+	cout << "Введите верхнюю границу индекса массива: "; cin >> up;
+
+	safearray sa1(low, up);
+
+	// задаем значения элементов
+	 for (int j = low; j <= up; j++)
+	// используем функцию слева от знака присваивания (=) 
+	sa1[j] = j * 10;
+
+	// показываем элементы
+	for (int j = low; j <= up; j++)
+	{
+		// используем функцию справа от знака присваивания (=) 
+		int temp = sa1[j];
+		cout << "Элемент " << j << " равен " << temp << endl;
+	}
+
+	return 0;
+}
+
+
+
+
+НОМЕР 11
+
+
