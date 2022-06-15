@@ -1,0 +1,797 @@
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+using namespace std;
+
+
+class Time //класс времени
+
+{
+
+private:
+
+	unsigned int hour, minutes, seconds; //часы, минуты, секунды
+
+
+public:
+Time() : hour(0), minutes(0), seconds(0)
+
+	{}
+
+	Time(unsigned int h, unsigned int m, unsigned int s) : hour(h), minutes(m), seconds(s) //конструктор без параметров, инициализирующий поля нулями
+
+	{}
+
+		void display()const
+
+	{
+
+		cout << hour << ":" << minutes << ":" << seconds << endl; // конструктор с параметрами, инициализирующий поля заданными значениями
+
+	};//прототипы перегрузок
+		Time operator + (Time t2)
+
+	{
+
+		long totalsecs = (hour * 3600) + (minutes * 60) + seconds + (t2.hour * 3600) + (t2.minutes * 60) + t2.seconds;
+
+		int h = totalsecs / (60 * 60);
+
+		int m = totalsecs % (60 * 60) / 60; int s = totalsecs % (60 * 60) % 60; return Time(h, m, s);
+	}
+
+	Time operator - (Time t2)
+
+	{
+
+		long totalsecs = ((hour * 3600) + (minutes * 60) + seconds) - ((t2.hour * 3600) + (t2.minutes * 60) + t2.seconds);
+
+		int h = totalsecs / (60 * 60);
+
+		int m = totalsecs % (60 * 60) / 60; int s = totalsecs % (60 * 60) % 60; return Time(h, m, s);
+	}
+
+	Time operator * (Time t2)
+
+	{
+
+		long totalsecs = (hour * 3600) + ((minutes * 60) + seconds) * ((t2.hour * 3600) + (t2.minutes * 60) + t2.seconds);
+
+		int h = totalsecs / (60 * 60);
+
+		int m = totalsecs % (60 * 60) / 60; int s = totalsecs % (60 * 60) % 60; return Time(h, m, s);
+	}
+
+		Time operator ++ ()
+
+	{
+
+		return Time(++hour, ++minutes, ++seconds);
+
+	}
+
+	Time operator -- ()
+
+	{
+
+		return Time(--hour, --minutes, --seconds);
+
+	}
+
+	Time operator ++ (int)
+
+	{
+
+		return Time(hour++, minutes++, seconds++);
+
+	}
+
+	Time operator -- (int)
+
+	{
+
+		return Time(hour--, minutes--, seconds--);
+
+	}
+
+};
+
+int main()
+
+{
+
+	Time time_1(3, 5, 2), time_2(2, 5, 3); Time time_sum, temp;
+	time_sum = time_1 + time_2; time_1.display(); time_2.display(); time_sum.display();
+	++time_sum; time_sum.display();
+
+		--time_sum; time_sum.display(); temp = time_sum++; temp.display(); temp = time_sum--; temp.display();
+	time_sum = time_1 - time_2; time_sum.display(); time_sum = time_1 * time_2; time_sum.display(); system("pause");
+	return 0;
+
+}
+
+
+
+
+
+
+
+
+
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+#include <process.h> //for exit()
+using namespace std;
+const int LIMIT = 100; //array size
+const double PI = 3.141592653589793; // 15 знаков после точки
+// Множитель для преобразования градусов в радианы
+const double factor = PI / 180.0;
+class MyTime
+{
+private:
+
+		unsigned int hours, minutes, seconds;
+public:
+	MyTime()
+	{
+		char sb = '0';
+		cout << "Введите значение времени в часах, минутах и секундах: ";
+		cin >> hours >> sb >> minutes >> sb >> seconds;
+	}
+	void display()
+	{
+		cout << "Время: " << hours << ':' << minutes << ':' << seconds;
+	}
+	void operator+(MyTime& temp)
+	{
+		unsigned int total_seconds = 0;
+		total_seconds = 3600 * (hours + temp.hours) + 60 * (minutes + temp.minutes) +
+			(seconds + temp.seconds);
+		hours = total_seconds / 3600;
+		
+		minutes = total_seconds%(60* 60)/60;
+	
+		seconds = total_seconds%(60*60)%60;
+		cout << "Результат сложения: " << hours << ':' << minutes << ':' << seconds;
+	}
+	void operator-(MyTime& temp)
+	{
+		unsigned int total_seconds = 0;
+		total_seconds = 3600 * (hours - temp.hours) + 60 * (minutes - temp.minutes) +
+			seconds - temp.seconds;
+	
+			hours = total_seconds / 3600;
+		total_seconds -= hours * 3600;
+		minutes = total_seconds / 60;
+		total_seconds -= minutes * 60;
+		seconds = total_seconds;
+		cout << "Результат вычитания: " << hours << ':' << minutes << ':' << seconds;
+	}
+	void operator*(MyTime& temp)
+	{
+		unsigned int total_seconds = 0;
+		total_seconds = 3600 * (hours * temp.hours) + 60 * (minutes * temp.minutes) +
+			seconds * temp.seconds;
+		hours = total_seconds / 3600;
+		total_seconds -= hours * 3600;
+		minutes = total_seconds / 60;
+		total_seconds -= minutes * 60;
+		seconds = total_seconds;
+		cout << "Результат умножения: " << hours << ':' << minutes << ':' << seconds;
+	}
+	// Прибавить 1:00:00
+	MyTime& operator++() // Префикс
+	{
+		hours++;
+		return *this;
+	}
+	MyTime& operator++(int) // Постфикс
+	{
+
+			hours++;
+		return *this;
+	}
+	// Отнять 1:00:00
+	MyTime& operator--() // Префикс
+	{
+		hours--;
+		return *this;
+	}
+	MyTime& operator--(int) // Постфикс
+	{
+		hours--;
+		return *this;
+	}
+};
+class Fraction
+{
+private:
+	int num, den;
+public:
+	void set()
+	{
+		char sb = '0';
+		cout << "Введите дробь: "; cin >> num >> sb >> den;
+	}
+	void get()
+	{
+		cout << "Дробь = " << num << '/' << den << endl;
+
+	}
+	void operator+(Fraction& f)
+	{
+		lowterms(num * f.den + den * f.num, den * f.den);
+	}
+	void operator-(Fraction& f)
+	{
+		lowterms(num * f.den - den * f.num, den * f.den);
+	}
+	void operator*(Fraction& f)
+	{
+		lowterms(num * f.num, den * f.den);
+	}
+	void operator/(Fraction& f)
+	{
+		lowterms(num * f.den, den * f.num);
+	}
+	// Для числителя
+	bool operator!=(const int& temp_num)
+	{
+		if (num != temp_num)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+		// Для знаменателя
+		bool operator==(const int& temp_den)
+	{
+		if (den == temp_den)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	void lowterms(int l_num, int l_den) // Сокращение дроби
+	{
+		long tnum, tden, temp, gcd;
+		tnum = labs(l_num); // Используем неотрицательные значения
+		tden = labs(l_den); // Нужен cmath
+		if (tden == 0)
+		{ // Проверка знаменателя
+			cout << "Недопустимый знаменатель";
+			exit(1);
+		}
+		else
+			if (tnum == 0)
+			{
+				l_num = 0;
+				l_den = 1;
+				return;
+			}
+		// Нахождение наибольшего общего делителя
+		while (tnum != 0)
+		{
+		
+				if (tnum < tden)
+				{ // Если числитель больше знаменателя, меняем их местами.
+					temp = tnum;
+					tnum = tden;
+					tden = temp;
+				}
+			tnum = tnum - tden;
+		}
+		gcd = tden;// Делим числитель и знаменатель на НОД.
+		l_num = l_num / gcd;
+		l_den = l_den / gcd;
+		cout << l_num << '/' << l_den << endl;
+	}
+};
+class bMoney
+{
+private:
+	long double money;
+public:
+	void set(long double temp)
+	{
+		money = temp;
+	}
+	void putmoney(char* str) // Положить деньги
+	{
+		char str_temp[] = "1234567890123456.78"; // На 19 элементов: 2 для дробной части, 16 для целой
+	
+			// и 1 для точки
+			// Копируем str в str_temp
+			int i_ind = 0, j_ind = 0;
+		while (str[i_ind])
+		{
+			if (str[i_ind] == '$' || str[i_ind] == '\'')
+			{
+				i_ind++;
+				continue;
+			}
+			else
+			{
+				str_temp[j_ind] = str[i_ind];
+				i_ind++;
+				j_ind++;
+			}
+		}
+		str_temp[j_ind] = str[i_ind]; // Не забываем про '\0'
+		// cout << "str_temp = " << str_temp << endl; // Для тестов
+		char left_str[] = "1234567890123456", right_str[] = "78";
+		//Обнулим i_ind и j_ind
+		i_ind = 0;
+		j_ind = 0;
+		while (str_temp[i_ind])
+		{
+			if (str_temp[i_ind] == '.')
+			{
+				left_str[i_ind] = '\0';
+				right_str[0] = str_temp[i_ind + 1];
+				right_str[1] = str_temp[i_ind + 2];
+		
+					break;
+			}
+			else
+			{
+				left_str[i_ind] = str_temp[i_ind];
+				i_ind++;
+			}
+		}
+		// cout << "left_str = " << left_str << endl; // Для тестов
+		// cout << "right_str = " << right_str << endl; // Для тестов
+		// Обнулим i_ind
+		i_ind = 0;
+		money = atoll(left_str) + atoll(right_str) / 100.0;
+		cout << "Вы ввели: " << fixed << setprecision(2) << money << endl;
+	}
+	void getmoney() // Вывести деньги
+	{
+		char str[] = "$9'999'999'999'999'990.00"; // На 25 элементов.
+		// 26 элемент = '\0'
+		unsigned long long int temp_money = money * 100; // Дробную часть в целую
+		int count = 0; // Будем использовать в качестве разделителя тысяч
+		// cout << temp_money << endl; // Для тестов
+		str[3] = '\0';
+		str[2] = temp_money % 10 + 48;
+	
+			temp_money /= 10;
+		str[1] = temp_money % 10 + 48;
+		temp_money /= 10;
+		str[0] = '.';
+		for (int i = 4;; i++)
+		{
+			count++;
+			// Перемещаем прошлые элементы str в соответствии с новой итерацией
+			for (int j = i; j > 0; j--)
+			{
+				str[j] = str[j - 1];
+			}
+			if (count == 4) // Вставляем символ разделитель тысяч
+			{
+				str[0] = '\'';
+				count = 0;
+				continue;
+			}
+			str[0] = temp_money % 10 + 48;
+			temp_money /= 10;
+			if (temp_money == 0)
+			{
+				cout << "$" << str << endl;
+				break;
+			}
+		
+		}
+	}
+	void fromDollarsToPounds()
+	{
+		long double temp = money;
+		int lb = (int)(temp / 50.0);
+		temp -= lb * 50;
+		int shilling = (int)(temp / 2.5);
+		temp -= shilling * 2.5;
+		int penalties = (int)(temp / (50.0 / 240.0));
+		cout << "Перевод в фунты-шиллинги-пенсы: £" << lb << '.' << shilling << '.' <<
+			penalties << endl;
+	}
+	// Присваиваем
+	bMoney& operator=(const long double& temp_val)
+	{
+		money = temp_val;
+		return *this;
+	}
+	// Складываем суммы
+	long double operator+(const bMoney& temp)
+	{
+		return money + temp.money;
+	}
+	// Вычитаем суммы
+	long double operator-(const bMoney& temp)
+	{
+		return money - temp.money;
+	}
+	// Умножение цены за изделие на их кол-во
+	long double operator*(const long double& temp)
+	{
+		return money * temp;
+	}
+	// Делим общую цену на цену за изделие
+	long double operator/(const bMoney& temp)
+	{
+		return money / temp.money;
+	}
+	long double operator/(const long double& temp)
+	{
+		return money / temp;
+	}
+};
+class Safearay
+{
+private:
+	int arr[LIMIT], count;
+public:
+	Safearay(int bottom_bound = 0, int upper_bound = 100)
+	{
+		if (upper_bound - bottom_bound <= 100)
+		{
+			cout << "Границы принимаются" << endl;
+		
+				count = upper_bound - bottom_bound;
+		}
+		else
+		{
+			for (;;)
+			{
+				cout << "Неверные границы!\nВведите нижнюю границу: ";
+				cin >> bottom_bound;
+				cout << "Введите верхнюю границу: "; cin >> upper_bound;
+				if (upper_bound - bottom_bound <= 100)
+				{
+					cout << "Границы принимаются" << endl;
+					count = upper_bound - bottom_bound;
+					break;
+				}
+			}
+		}
+	}
+	int bounds()
+	{
+		return count;
+	}
+	int& operator[](int index) // note: return by reference
+	{
+		if (index < 0 || index >= count)
+		{
+			cout << "\nИндекс выходит за пределы";
+			exit(1);
+		}
+		return arr[index];
+	}
+};
+class Polar
+{
+private:
+	double radius, degrees;
+public:
+	// Ввод данных
+	void set()
+	{
+		cout << "Введите радиус: "; cin >> radius;
+		cout << "Введите угол в градусах: "; cin >> degrees;
+	}
+	// Вывод данных
+	void get()
+	{
+		cout << "Радиус = " << radius << "\nУгол в градусах = " << degrees << endl;
+	}
+	void operator+(const Polar& temp)
+	{
+		double x = 0.0, x_t = 0.0, y = 0.0, y_t = 0.0,
+			x_new = 0.0, y_new = 0.0, radius_new = 0.0, degrees_new = 0.0;
+		x = radius * cos(degrees * factor);
+		y = radius * sin(degrees * factor);
+		cout << "Координаты первой точки в прямоугольной системе координат: " << x
+			<< "; " << y << endl;
+		x_t = temp.radius * cos(temp.degrees * factor);
+		y_t = temp.radius * sin(temp.degrees * factor);
+		cout << "Координаты второй точки в прямоугольной системе координат: " <<
+			x_t << "; " << y_t << endl;
+		x_new = x + x_t;
+		y_new = y + y_t;
+
+			cout << "Координаты новой точки в прямоугольной системе координат: "
+			<< x_new << "; " << y_new << endl;
+		radius_new = sqrt(pow(x_new, 2) + pow(y_new, 2));
+		degrees_new = acos(x_new / radius_new) * 180 / PI;
+		cout << "Координаты новой точки в полярной системе координат: "
+			<< radius_new << "; " << degrees_new << endl;
+	}
+};
+class Sterling
+{
+private:
+	long lb;
+	int shilling, penalties;
+public:
+	Sterling()
+	{
+		getSterLing();
+	}
+	Sterling(double elementary)
+	{
+		int temp = 0;
+		temp = elementary * 240.0;
+		lb = temp / 240.0;
+		temp -= lb * 240;
+		shilling = temp / 12.0;
+		temp -= shilling * 12;
+		penalties = temp;
+		cout << "Эквивалентная сумма в старой форме записи: £" << lb << '.' << shilling
+			<< '.' << penalties << endl;
+	}
+
+		Sterling(long t_lb, int t_shilling, int t_penalties)
+	{
+		lb = t_lb;
+		shilling = t_shilling;
+		penalties = t_penalties;
+		cout << "Вы ввели: £" << lb << '.' << shilling << '.' << penalties << endl;
+	}
+	void getSterLing()
+	{
+		char sb = '0';
+		cout << "Введите значение суммы в формате £X.YY.ZZ: ";
+		cin >> sb >> lb >> sb >> shilling >> sb >> penalties;
+		cout << "Вы ввели: £" << lb << '.' << shilling << '.' << penalties << endl;
+	}
+	void putSterling()
+	{
+		cout << "Сумма = £" << lb << '.' << shilling << '.' << penalties << endl;
+	}
+	void operator+(const Sterling& temp)
+	{
+		long general = 0;
+		general = (penalties + temp.penalties) + 12 * (shilling + temp.shilling) + 240 * (lb +
+			temp.lb);
+		long t_lb;
+		int t_shilling, t_penalties;
+		t_lb = general / 240;
+		general -= t_lb * 240;
+		t_shilling = general / 12;
+
+			general -= t_shilling * 12;
+		t_penalties = general;
+		cout << "Сложение сумм = £" << t_lb << '.' << t_shilling << '.' << t_penalties <<
+			endl;
+	}
+	void operator-(const Sterling& temp)
+	{
+		long general = 0;
+		general = (penalties - temp.penalties) + 12 * (shilling - temp.shilling) + 240 * (lb -
+			temp.lb);
+		long t_lb;
+		int t_shilling, t_penalties;
+		t_lb = general / 240;
+		general -= t_lb * 240;
+		t_shilling = general / 12;
+		general -= t_shilling * 12;
+		t_penalties = general;
+		cout << "Сложение сумм = £" << t_lb << '.' << t_shilling << '.' << t_penalties <<
+			endl;
+	}
+	void operator*(const double& t_double)
+	{
+		double buffer = (lb * 240.0 + shilling * 12.0 + penalties) / 240.0;
+		buffer *= t_double;
+		cout << "Умножение суммы на число = ";
+	
+			long t_lb;
+		int t_shilling, t_penalties, temp = 0;
+		temp = buffer * 240.0;
+		t_lb = temp / 240.0;
+		temp -= t_lb * 240;
+		t_shilling = temp / 12.0;
+		temp -= t_shilling * 12;
+		t_penalties = temp;
+		cout << "£" << t_lb << '.' << t_shilling << '.' << t_penalties << endl;
+	}
+	void operator/(const double& t_double)
+	{
+		double buffer = (lb * 240.0 + shilling * 12.0 + penalties) / 240.0;
+		buffer /= t_double;
+		cout << "Деление суммы на число = ";
+		long t_lb;
+		int t_shilling, t_penalties, temp = 0;
+		temp = buffer * 240.0;
+		t_lb = temp / 240.0;
+		temp -= t_lb * 240;
+		t_shilling = temp / 12.0;
+		temp -= t_shilling * 12;
+		t_penalties = temp;
+		cout << "£" << t_lb << '.' << t_shilling << '.' << t_penalties << endl;
+	}
+	void operator/(const Sterling& t_sterling)
+	
+	{
+		double buffer_1 = (lb * 240.0 + shilling * 12.0 + penalties) / 240.0,
+			buffer_2 = (t_sterling.lb * 240.0 + t_sterling.shilling * 12.0 +
+				t_sterling.penalties) / 240.0;
+		buffer_1 /= buffer_2;
+		cout << "Деление суммы на сумму = ";
+		long t_lb;
+		int t_shilling, t_penalties, temp = 0;
+		temp = buffer_1 * 240.0;
+		t_lb = temp / 240.0;
+		temp -= t_lb * 240;
+		t_shilling = temp / 12.0;
+		temp -= t_shilling * 12;
+		t_penalties = temp;
+		cout << "£" << t_lb << '.' << t_shilling << '.' << t_penalties << endl;
+	}
+	void fromPoundsToDollars()
+	{
+		long double value = lb * 50.0 + shilling * 2.5 + penalties * (50.0 / 240.0);
+		bMoney bM;
+		bM.set(value);
+		cout << "Сумма в долларах = "; bM.getmoney();
+	}
+};
+int main(int nNumberofArgs, char* pszArgs[])
+{
+
+		setlocale(0, "");
+	cout << "================================\n"
+		<< "=Задание N5: MyTime \"++\" и \"--\"=\n"
+		<< "================================\n\n";
+	MyTime mt1;
+	cout << "mt1 = "; mt1.display(); cout << endl;
+	cout << "mt1++ = "; (mt1++).display(); cout << endl;
+	cout << "++mt1 = "; (++mt1).display(); cout << endl;
+	cout << "--mt1 = "; (--mt1).display(); cout << endl;
+	cout << "mt1-- = "; (mt1--).display(); cout << endl;
+	cout << "Итоговое mt1 = "; mt1.display(); cout << endl;
+	cout << endl;
+	cout << "==============================\n"
+		<< "=Задание N6: MyTime \"*\" и \"-\"=\n"
+		<< "==============================\n\n";
+	MyTime mt2;
+	cout << "mt2 = "; mt2.display(); cout << endl;
+	cout << "mt1 - mt2:\n "; mt1 - mt2; cout << endl;
+	cout << "mt1 + mt2:\n "; mt1 + mt2; cout << endl;
+	cout << "mt1 * mt2:\n "; mt1* mt2; cout << endl;
+
+		cout << endl;
+	cout << "======================\n"
+		<< "=Задание N7: Fraction=\n"
+		<< "======================\n\n";
+	Fraction f1, f2;
+	for (;;)
+	{
+		char sb = '0';
+		f1.set();
+		if (!(f1 != 0) && f1 == 1)
+		{
+			break;
+		}
+		f2.set();
+		if (!(f2 != 0) && f2 == 1)
+		{
+			break;
+		}
+		cout << "Какую арифметическую операцию с дробями вы хотите сделать? "; cin
+			>> sb;
+		switch (sb)
+		{
+		case '+': f1 + f2; break;
+		case '-': f1 - f2; break;
+		case '*': f1 * f2; break;
+		case '/': f1 / f2; break;
+	
+		default:
+			cout << "Такую операцию мы делать не умеем :(\n";
+			break;
+		}
+	}
+	cout << endl;
+	cout << "===================\n"
+		<< "=Задание N8: Money=\n"
+		<< "===================\n\n";
+	bMoney temp_bM, genearal_bM, bM;
+	double num_of_prod = 0.0;
+	char str_for_8[] = "$9'999'999'999'999'990.00"; // На 25 элементов, т.к. 26 элемент = '\0'
+	char sb = '0';
+	do
+	{
+		cout << "Введите общую сумму денег: "; cin >> str_for_8;
+		genearal_bM.putmoney(str_for_8);
+		cout << "Введите цену за изделие: "; cin >> str_for_8;
+		bM.putmoney(str_for_8);
+		cout << "Сложение двух сумм = ";
+		temp_bM = genearal_bM + bM;
+		temp_bM.getmoney();
+		cout << "Вычитание двух сумм = ";
+		temp_bM = genearal_bM - bM;
+	
+			temp_bM.getmoney();
+		cout << endl;
+		cout << "Введите кол-во изделий: "; cin >> num_of_prod;
+		cout << "Общая цена = ";
+		genearal_bM = bM * num_of_prod;
+		genearal_bM.getmoney();
+		cout << "Кол-во изделей (хоть мы уже и знаем): ";
+		num_of_prod = genearal_bM / bM;
+		cout << num_of_prod << endl;
+		cout << "Цена за изделие (тоже уже знаем) = ";
+		bM = genearal_bM / num_of_prod;
+		bM.getmoney();
+		cout << endl;
+		cout << "Повторить? (y / n): "; cin >> sb;
+	} while (sb != 'n');
+	cout << endl;
+	cout << "======================\n"
+		<< "=Задание N9: Safearay=\n"
+		<< "======================\n\n";
+	int bottom_bound = 0, upper_bound = 100;
+	cout << "Введите нижнюю границу: "; cin >> bottom_bound;
+	cout << "Введите верхнюю границу: "; cin >> upper_bound;
+
+		Safearay sa(bottom_bound, upper_bound);
+	for (int i = 0; i < sa.bounds(); i++)
+	{
+		sa[i] = (i + 1) * 10;
+	}
+	for (int i = 0; i < sa.bounds(); i++)
+	{
+		cout << "Element " << i << " is " << sa[i] << endl;
+	}
+	cout << sa[sa.bounds()]; // Выход за границы
+	cout << endl;
+	cout << "====================\n"
+		<< "=Задание N10: Polar=\n"
+		<< "====================\n\n";
+	Polar p1, p2;
+	cout << "Ввод полярных координат для первой точки.\n";
+	p1.set();
+	cout << "Ввод полярных координат для второй точки.\n";
+	p2.set();
+	p1 + p2;
+	cout << endl;
+	cout << "=======================\n"
+		<< "=Задание N11: Sterling=\n"
+		
+		<< "=======================\n\n";
+	cout << endl;
+	cout << "================================\n"
+		<< "=Задание N12: Sterling + bMoney=\n"
+		<< "================================\n\n";
+	char str_for_12[] = "$9'999'999'999'999'990.00"; // На 25 элементов, т.к. 26 элемент = '\0'
+	cout << "Введите сумму в долларах: "; cin >> str_for_12;
+	bMoney bM_12;
+	bM_12.putmoney(str_for_12);
+	bM_12.fromDollarsToPounds();
+	cout << "\nПередача суммы в фунтах-шиллингах-пенсах\n";
+	Sterling ster_for_12(2510, 0, 2);
+	ster_for_12.fromPoundsToDollars();
+	cout << endl;
+	// Ожидание, позволяющее пользователю увидеть результат
+	// работы программы
+	cout << "Нажмите Enter для продолжения...\n";
+	cin.get();
+	cin.get();
+	return 0;
+}
