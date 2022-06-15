@@ -323,3 +323,87 @@ int main()
 
 
 
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+class Counter // класс, реализующий счетчик и операцию его инкремента (в префиксной форме)
+{
+protected:	// заметьте, что тут не следует использовать private
+	int count;		// счетчик
+public:
+	Counter() : count(0)	// конструктор без параметров
+	{ }
+	Counter(int c) : count(c)	// конструктор с одним параметром
+	{ }
+	unsigned int get_count() const // получение значения счетчика
+	{
+		return count;
+	}
+	Counter operator++()	// увеличить значение счетчика (префиксная форма)
+	{
+		return Counter(++count);
+	}
+};
+// класс, производный от класса Counter (счетчик), добавляющий операцию
+// декремента счетчика (в префиксной форме) 
+class CountDn : public Counter
+{
+public:
+	CountDn() : Counter()	// конструктор без параметров
+	{ }
+	CountDn(int c) : Counter(c)	// конструктор с одним параметром
+	{ }
+	CountDn operator--() // уменьшить значение счетчика(префиксная форма)
+	{
+		return CountDn(--count);
+	}
+};
+// новый класс, добавляющий в программу инкремент и декремент счетчика
+// в постфиксной форме 
+class Postfix : public CountDn
+{
+public:
+
+	Postfix() : CountDn() // конструктор без параметров
+	{}
+	Postfix(int c) : CountDn(c) // конструктор с одним параметром
+	{}
+	Postfix operator++(int) // инкремент (увеличение счетчика) в постфиксной форме
+	{
+		return Postfix(count++);
+	}
+	Postfix operator--(int) // декремент (уменьшение счетчика) в постфиксной форме
+	{
+		return Postfix(count--);
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian"); Counter* c1 = new Postfix;
+	cout << "\nc1 = " << c1->get_count();
+	++* c1; ++* c1; ++* c1;
+	cout << "\nc1 = " << c1->get_count(); CountDn* c2 = new Postfix;
+	cout << "\nc2 = " << c2->get_count();
+	--* c2; --* c2; --* c2;
+	cout << "\nc2 = " << c2->get_count(); Postfix c3, c4(10);
+	c3 = c4++;
+	c3.get_count(); c3 = c4++;
+	c3.get_count(); cout << endl; cin.get(); return 0;
+}
+
+
+
+
+
+8
+
+
+
+
