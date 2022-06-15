@@ -406,4 +406,97 @@ int main()
 
 
 
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+class String // класс, представляющий строку (массив символов)
+{
+protected:
+	enum { SZ = 80 }; // максимальный размер строки (нестандартный синтаксис) 
+	char str[SZ]; // сама строка
+public:
+	String() // конструктор без параметров
+	{
+		str[0] = '\0';
+	}
+	String(char s[]) //конструктор с одним параметром
+	{
+		strcpy_s(str, s);
+
+	}
+	void display() const // показ строки на экране
+	{
+		cout << str;
+	}
+	operator char* () // преобразование объекта класса String к обычной строке (массив типа char)
+	{
+		return str;
+	}
+};
+class Pstring : public String // класс, представляющий «защищенную» строку (с защитой от переполнения массива символов)
+{
+public:
+	Pstring(char s[]); // конструктор с одним параметром
+};
+Pstring::Pstring(char s[]) //конструктор для Pstring
+{
+	if (strlen(s) > SZ - 1)
+	{
+		for (int j = 0; j < SZ - 1; j++) 
+			str[j] = s[j];
+		str[SZ - 1] = '\0';
+	}
+	else
+	{
+		String(s);
+	}
+}
+// новый класс, добавляющий три метода, с помощью которых можно выделить часть строки и
+// присвоить ее другой строке 
+class Pstring2 : public Pstring
+{
+public:
+	string left(unsigned int amount) // метод извлекает из заданной строки n символов слева, записывает их в строку
+	{
+		string temp = "";
+		for (int i = 0; i < amount; i++)
+		{
+			temp += str[i];
+		}
+		return temp;
+	}
+	// метод извлекает из заданной строки n символов справа, записывает их в строку 
+	string right(unsigned int amount)
+	{
+		string temp = "";
+		int len = strlen(str);
+
+		for (int i = len - amount; i < len; i++)
+		{
+			temp += str[i];
+		}
+		return temp;
+	}
+	string mid(unsigned int amount, unsigned int elementary)// метод извлекает из заданной строки n символов, начиная с позиции mid, записывает
+	// их в строку
+	{
+		string temp = "";
+		for (int i = elementary - 1; i < elementary - 1 + amount; i++)
+		{
+			temp += str[i];
+		}
+		return temp;
+	}
+};
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	cout << endl;
+}
 
