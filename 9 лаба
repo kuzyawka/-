@@ -372,3 +372,81 @@ int main()
 
 
 
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+class narrays // класс, представляющий единым массивом n отдельных массивов
+{
+private:
+	const int NUMARRAYS; // количество отдельных массивов
+	const int MAXSIZE; // количество элементов в каждом из отдельных массивов 
+	int** ap;	// указатель на массив указателей на отдельные массивы типа int
+public:
+	narrays(int na, int ms) : NUMARRAYS(na), MAXSIZE(ms) // конструктор
+	{
+
+		// выделим память под массив указателей на отдельные массивы
+		ap = new int* [NUMARRAYS];
+		// выделим память под нужное количество отдельных массивов нужного размера
+
+		for (int j = 0; j < NUMARRAYS; j++)
+			*(ap + j) = new int[MAXSIZE];
+	}
+~narrays() // деструктор
+	{
+	// освобождаем память, выделенную ранее под отдельные массивы 
+	for (int j = 0; j < NUMARRAYS; j++)
+		delete[] * (ap + j);
+	// освобождаем память, выделенную ранее под массив указателей на отдельные массивы
+	delete[] ap;
+	}
+
+	int& operator[] (int n) // перегрузка операции индексации
+
+	{
+		int j = n / MAXSIZE; // номер отдельного массива (целочисленное деление)
+		int k = n % MAXSIZE; // индекс элемента в отдельном массиве
+		return *(*(ap + j) + k);
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+
+	int numarr; // количество отдельных массивов
+	int sizearr; // количество элементов в каждом из отдельных массивов
+
+	cout << "Введите количество отдельных массивов (больше 0): "; cin >> numarr;
+	cout << "Введите количество элементов в каждом отдельном массиве (больше 0): ";
+	cin>> sizearr;
+	cout << endl;
+
+	narrays arr(numarr, sizearr); // массив, объединяющий отдельные массивы в одно целое 
+	int i;	// индекс единого массива
+
+	// заполним единый массив тестовыми данными 
+	for (i = 0; i < numarr * sizearr; i++)
+	arr[i] = i * 10;
+
+	// выведем тестовые данные, хранящиеся в едином массиве, на экран 
+	for (i = 0; i < numarr * sizearr; i++)
+	cout << arr[i] << ((i % sizearr == sizearr - 1) ? '\n' : ' ');
+
+
+	return 0;
+}
+
+
+
+
+
+12
+
+
+
