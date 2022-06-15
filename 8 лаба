@@ -509,4 +509,135 @@ int main()
 
 
 
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+class date // класс, представляющий дату
+{
+private:
+	int day;   // день 
+	int month; // месяц 
+	int year; // год
+public:
+	// метод для получения данных класса от пользователя с клавиатуры
+	void get()
+{
+	char slash; // для косой черты
+	cout << "Введите день, месяц и год через косую черту (/): ";
+	cin >> day >> slash >> month >> slash >> year;
+}
+// константный метод выводит значения полей на экран 
+void display() const
+{
+	cout << day << "/" << month << "/" << year;
+}
+};
+
+// класс, представляющий издание (результат работы издательской компании) 
+class publication
+
+{
+private:
+	wstring title; // название издания
+	float price; // цена экземпляра издания
+public:
+	void getdata()
+	{
+		cout << "\n введите название издания: "; getline(ws(wcin), title);
+		cout << " введите цену экземпляра издания: "; cin >> price;
+	}
+	void putdata() const
+	{
+		wcout << "\n название издания: " << title;
+		cout << "\n цена экземпляра издания: " << price << endl;
+	}
+};
+
+// новый класс, представляющий издание (результат работы издательской компании)
+// (производный от старого класса, представляющего издание) 
+class publication2 : public publication
+{
+private:
+	date pub_date; // дата публикации издания 
+public:
+	void getdata()
+	{
+		publication::getdata();
+		cout << " введите дату публикации издания:\n "; pub_date.get();
+	}
+	void putdata() const
+	{
+		publication::putdata();
+		cout << L" дата публикации издания: "; pub_date.display(); wcout << endl;
+	}
+};
+
+//	класс,	представляющий	бумажную	книгу	(производный	от	нового	класса, представляющего издание)
+class book : public publication2
+{
+private:
+	int pages; // количество страниц в книге
+public:
+	void getdata()
+	{
+		publication2::getdata();
+		cout << " введите количество страниц в книге: "; cin >> pages;
+	}
+	void putdata() const
+	{
+		publication2::putdata();
+
+		cout << " количество страниц в книге: " << pages << endl;
+	}
+};
+
+// класс, представляющий аудиокнигу (производный от нового класса, представляющего издание)
+class tape : public publication2
+{
+private:
+	float playing_time; // время проигрывания аудиокниги в минутах
+public:
+	void getdata()
+	{
+	publication2::getdata();
+	cout << " введите время проигрывания аудиокниги в минутах: ";
+	cin >> playing_time;
+}
+
+		void putdata() const
+	{
+		publication2::putdata();
+		cout << " время проигрывания аудиокниги в минутах: " << playing_time << endl;
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+
+	// создадим объекты для тестирования соответствующих классов
+	book b1; // бумажная книга
+	tape t1; // аудиокнига
+
+	// получим от пользователя данные для тестируемых объектов
+	cout << "Ввод данных опубликованной бумажной книги"; b1.getdata(); 
+	cout << "\nВвод данных опубликованной аудиокниги"; t1.getdata();
+
+	// выведем на экран данные тестируемых объектов
+	cout << "\nДанные опубликованной бумажной книги"; b1.putdata(); 
+	cout << "\nДанные опубликованной аудиокниги"; t1.putdata();
+
+	return 0;
+
+}
+
+
+
+
 
