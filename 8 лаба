@@ -781,4 +781,117 @@ int main()
 
 
 
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+struct Pair // пара чисел
+{
+
+	int x; int y;
+};
+
+class Stack	// класс, реализующий стек (базовый класс)
+{
+protected:	// ЗАМЕТЬТЕ: не private!
+//enum { MAX = 7 };	// немного нестандартный синтаксис
+
+ static const int MAX = 7; // количество элементов в массиве
+//	(одна	константа	для	всех	объектов,статическая)
+	int st[MAX];		// стек в виде массива 
+	int top;	// вершина стека
+public:
+	Stack()	// конструктор
+	{
+		top = -1;
+	}
+	void push(int var)	// поместить в стек
+	{
+		st[++top] = var;
+	}
+
+	int pop()	// взять из стека
+	{
+		return st[top--];
+	}
+};
+
+class Stack2 : public Stack // класс, реализующий стек (производный класс)
+{
+public:
+	void push(int var)	// поместить в стек
+	{
+		if (top >= MAX - 1) // если стек полон, то ошибка
+		{
+			cout << "\nОшибка: стек полон!\n"; exit(1);
+		}
+		Stack::push(var);	// вызов метода push класса Stack
+	}
+	int pop()	// взять из стека
+	{
+		if (top < 0)	// если стек пуст, то ошибка
+		{
+			cout << "\nОшибка: стек пуст!\n"; exit(1);
+		}
+		return Stack::pop(); // вызов метода pop класса Stack
+	}
+};
+
+// новый класс, реализующий стек, работающий с парой чисел (производный от Stack2
+ class pairStack : public Stack2
+{
+public:
+	void push(Pair unit) // поместить в стек блок из двух чисел
+	{
+		Stack2::push(unit.x); // поместить в стек первое число
+		Stack2::push(unit.y); // поместить в стек второе число
+	}
+	Pair pop()	// взять из стека блок из двух чисел
+	{
+		Pair temp_unit;
+		// извлекаем из стека числа в обратном порядке, так как стек организуется
+		// по принципу «последним вошёл, первым вышел»
+		temp_unit.y = Stack2::pop(); // берем из стека второе число 
+		temp_unit.x = Stack2::pop(); // берем из стека первое число 
+		return temp_unit;
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+
+	Pair p1 = { 23, 56 },	// тестовые пары чисел
+		p2 = { 8, 0 },
+		p3 = { -34, 5 },
+		p4 = { 1003, -345 };
+
+	pairStack s1;	// стек
+
+	s1.push(p1);	// помещаем в стек пары чисел 
+	s1.push(p2);
+	s1.push(p3);
+	
+//s1.push(p4);	// ошибка переполнения стека
+
+	Pair p;
+	p = s1.pop(); wcout << p.x << L", " << p.y << endl;
+	p = s1.pop(); wcout << p.x << L", " << p.y << endl;
+	p = s1.pop(); wcout << p.x << L", " << p.y << endl;
+	// p = s1.pop(); wcout << p.x << L", " << p.y << endl; // ошибка, так как стек уже пуст
+
+}
+
+
+
+
+12
+
+
+
+
 
