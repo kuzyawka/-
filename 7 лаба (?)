@@ -1,124 +1,3 @@
-#include <iostream>
-#include <iomanip>
-#include <ctype.h>
-#include <string>
-#include <cmath>
-using namespace std;
-
-
-class Time //класс времени
-
-{
-
-private:
-
-	unsigned int hour, minutes, seconds; //часы, минуты, секунды
-
-
-public:
-Time() : hour(0), minutes(0), seconds(0)
-
-	{}
-
-	Time(unsigned int h, unsigned int m, unsigned int s) : hour(h), minutes(m), seconds(s) //конструктор без параметров, инициализирующий поля нулями
-
-	{}
-
-		void display()const
-
-	{
-
-		cout << hour << ":" << minutes << ":" << seconds << endl; // конструктор с параметрами, инициализирующий поля заданными значениями
-
-	};//прототипы перегрузок
-		Time operator + (Time t2)
-
-	{
-
-		long totalsecs = (hour * 3600) + (minutes * 60) + seconds + (t2.hour * 3600) + (t2.minutes * 60) + t2.seconds;
-
-		int h = totalsecs / (60 * 60);
-
-		int m = totalsecs % (60 * 60) / 60; int s = totalsecs % (60 * 60) % 60; return Time(h, m, s);
-	}
-
-	Time operator - (Time t2)
-
-	{
-
-		long totalsecs = ((hour * 3600) + (minutes * 60) + seconds) - ((t2.hour * 3600) + (t2.minutes * 60) + t2.seconds);
-
-		int h = totalsecs / (60 * 60);
-
-		int m = totalsecs % (60 * 60) / 60; int s = totalsecs % (60 * 60) % 60; return Time(h, m, s);
-	}
-
-	Time operator * (Time t2)
-
-	{
-
-		long totalsecs = (hour * 3600) + ((minutes * 60) + seconds) * ((t2.hour * 3600) + (t2.minutes * 60) + t2.seconds);
-
-		int h = totalsecs / (60 * 60);
-
-		int m = totalsecs % (60 * 60) / 60; int s = totalsecs % (60 * 60) % 60; return Time(h, m, s);
-	}
-
-		Time operator ++ ()
-
-	{
-
-		return Time(++hour, ++minutes, ++seconds);
-
-	}
-
-	Time operator -- ()
-
-	{
-
-		return Time(--hour, --minutes, --seconds);
-
-	}
-
-	Time operator ++ (int)
-
-	{
-
-		return Time(hour++, minutes++, seconds++);
-
-	}
-
-	Time operator -- (int)
-
-	{
-
-		return Time(hour--, minutes--, seconds--);
-
-	}
-
-};
-
-int main()
-
-{
-
-	Time time_1(3, 5, 2), time_2(2, 5, 3); Time time_sum, temp;
-	time_sum = time_1 + time_2; time_1.display(); time_2.display(); time_sum.display();
-	++time_sum; time_sum.display();
-
-		--time_sum; time_sum.display(); temp = time_sum++; temp.display(); temp = time_sum--; temp.display();
-	time_sum = time_1 - time_2; time_sum.display(); time_sum = time_1 * time_2; time_sum.display(); system("pause");
-	return 0;
-
-}
-
-
-
-
-
-
-
-
 
 #include <iostream>
 #include <iomanip>
@@ -440,49 +319,7 @@ public:
 		return money / temp;
 	}
 };
-class Safearay
-{
-private:
-	int arr[LIMIT], count;
-public:
-	Safearay(int bottom_bound = 0, int upper_bound = 100)
-	{
-		if (upper_bound - bottom_bound <= 100)
-		{
-			cout << "Границы принимаются" << endl;
-		
-				count = upper_bound - bottom_bound;
-		}
-		else
-		{
-			for (;;)
-			{
-				cout << "Неверные границы!\nВведите нижнюю границу: ";
-				cin >> bottom_bound;
-				cout << "Введите верхнюю границу: "; cin >> upper_bound;
-				if (upper_bound - bottom_bound <= 100)
-				{
-					cout << "Границы принимаются" << endl;
-					count = upper_bound - bottom_bound;
-					break;
-				}
-			}
-		}
-	}
-	int bounds()
-	{
-		return count;
-	}
-	int& operator[](int index) // note: return by reference
-	{
-		if (index < 0 || index >= count)
-		{
-			cout << "\nИндекс выходит за пределы";
-			exit(1);
-		}
-		return arr[index];
-	}
-};
+
 class Polar
 {
 private:
@@ -743,24 +580,7 @@ int main(int nNumberofArgs, char* pszArgs[])
 		cout << "Повторить? (y / n): "; cin >> sb;
 	} while (sb != 'n');
 	cout << endl;
-	cout << "======================\n"
-		<< "=Задание N9: Safearay=\n"
-		<< "======================\n\n";
-	int bottom_bound = 0, upper_bound = 100;
-	cout << "Введите нижнюю границу: "; cin >> bottom_bound;
-	cout << "Введите верхнюю границу: "; cin >> upper_bound;
-
-		Safearay sa(bottom_bound, upper_bound);
-	for (int i = 0; i < sa.bounds(); i++)
-	{
-		sa[i] = (i + 1) * 10;
-	}
-	for (int i = 0; i < sa.bounds(); i++)
-	{
-		cout << "Element " << i << " is " << sa[i] << endl;
-	}
-	cout << sa[sa.bounds()]; // Выход за границы
-	cout << endl;
+	
 	cout << "====================\n"
 		<< "=Задание N10: Polar=\n"
 		<< "====================\n\n";
@@ -771,11 +591,7 @@ int main(int nNumberofArgs, char* pszArgs[])
 	p2.set();
 	p1 + p2;
 	cout << endl;
-	cout << "=======================\n"
-		<< "=Задание N11: Sterling=\n"
-		
-		<< "=======================\n\n";
-	cout << endl;
+;
 	cout << "================================\n"
 		<< "=Задание N12: Sterling + bMoney=\n"
 		<< "================================\n\n";
@@ -795,3 +611,12 @@ int main(int nNumberofArgs, char* pszArgs[])
 	cin.get();
 	return 0;
 }
+
+
+
+
+
+
+НОМЕР 9
+
+
