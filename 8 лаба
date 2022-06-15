@@ -639,5 +639,146 @@ int main()
 
 
 
+10
+
+
+
+
+#include <iostream>
+#include <iomanip>
+#include <ctype.h>
+#include <string>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+
+const int LEN = 80; // максимальная длина строковых переменных 
+class student // студент (сведения об образовании)
+{
+private:
+
+	wchar_t school[LEN]; // название учебного заведения
+	wchar_t degree[LEN]; // уровень полученного образования
+public:
+	void getedu()
+	{
+
+		cout << " Введите название учебного заведения: "; wcin >> school; cout << " Введите уровень полученного образования\n";
+		cout << " (неполное_высшее, бакалавр, магистр, кандидат_наук): "; wcin >>degree;
+	}
+
+	
+		void putedu() const
+	{
+		cout << "\n Учебное заведение: " << school;
+		cout << "\n Уровень полученного образования: " << degree;
+	}
+};
+
+class employee // класс, представляющий работника
+{
+private:
+	wchar_t name[LEN];	// фамилия работника
+	unsigned long number; // номер работника
+public:
+	void getdata()
+	{
+		cout << "\n Введите фамилию: "; wcin >> name; cout << " Введите номер: "; wcin >> number;
+	}
+	void putdata() const
+	{
+		cout << "\n Фамилия: " << name; cout << "\n Номер: " << number;
+	}
+};
+
+class manager : private employee, private student // управленец
+{
+private:
+	char title[LEN]; // наименование должности, например, «вице-президент» 
+	double dues;	// сумма взносов в гольф-клуб
+public:
+	void getdata()
+	{
+		employee::getdata();
+		cout << " Введите должность: "; cin >> title;
+		cout << " Введите сумму взносов в гольф-клуб: "; cin >> dues; student::getedu();
+	}
+	void putdata() const
+	{
+		employee::putdata();
+
+		cout << "\n Должность: " << title;
+		cout << "\n Сумма взносов в гольф-клуб: " << dues; student::putedu();
+	}
+};
+
+// новый класс, представляющий управленца высшего звена (производный от класса управленца)
+class executive : private manager
+{
+private:
+	double yearly_bonus; // размер годовой премии
+	unsigned long shares; // количество акций
+public:
+	void getdata()
+	{
+		manager::getdata();
+		cout << " Введите размер годовой премии: "; cin >> yearly_bonus; cout << " Введите количество акций: "; cin >> shares;
+	}
+	void putdata() const
+	{
+		manager::putdata();
+		cout << "\n Размер годовой премии: " << yearly_bonus; cout << "\n Количество акций: " << shares;
+	}
+};
+
+class scientist : private employee, private student // ученый
+{
+private:
+	int pubs; // количество публикаций
+public:
+	void getdata()
+	{
+		employee::getdata();
+		cout << " Введите количество публикаций: "; cin >> pubs; student::getedu();
+	}
+	void putdata() const
+	{
+		employee::putdata();
+		cout << "\n Количество публикаций: " << pubs; student::putedu();
+	}
+};
+
+class laborer : public employee // рабочий
+{ };
+
+int main()
+
+{
+	setlocale(LC_ALL, "Russian");
+
+	executive e1; manager m1; scientist s1; laborer l1;
+
+	// получим от пользователя информацию о нескольких работниках
+	cout << "Ввод информации об управленце высшего звена";
+	e1.getdata(); cout << "\nВвод информации об управленце";	m1.getdata();
+	cout << "\nВвод информации об ученом";	s1.getdata(); cout << "\nВвод информации о рабочем";	l1.getdata();
+
+	// выведем полученную информацию на экран
+	cout << "\nИнформация об управленце высшего звена"; e1.putdata(); cout << "\nИнформация об управленце";	m1.putdata();
+	cout << "\nИнформация об ученом";	s1.putdata(); cout << "\nИнформация о рабочем";	l1.putdata(); cout << endl;
+
+}
+
+
+
+
+
+
+11
+
+
+
+
 
 
